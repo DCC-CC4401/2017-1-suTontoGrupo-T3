@@ -13,7 +13,7 @@ def login(request):
 
 
 def gestion_productos(request):
-    return render(request, 'app/gestion-productos.html')
+    return render(request, 'app/gestion_productos.html')
 
 
 def home(request):
@@ -25,4 +25,4 @@ def signup(request):
 
 
 def vendedor_profile(request):
-    return render(request, 'app/vendedor-profile-page.html')
+    return render(request, 'app/vendedor_profile.html')
