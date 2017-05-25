@@ -18,12 +18,12 @@ from . import views
 
 urlpatterns = [
     # app/
-    url(r'^index/$', views.index, name='index'),
+    url(r'^$', views.index, name='index'),
     # app/login/
     url(r'^login/$', views.login, name='login'),
     url(r'^gestion-productos/$', views.gestion_productos, name='gestion-productos'),
-    url(r'^$', views.home, name='home'),
-    url(r'^$', views.signup, name='signup'),
-    url(r'^$', views.vendedor_profile, name='vendedor-profile'),
+    url(r'^home/$', views.home, name='home'),
+    url(r'^signup/$', views.signup, name='signup'),
+    url(r'^vendedor-profile$', views.vendedor_profile, name='vendedor-profile'),
 
 ]
