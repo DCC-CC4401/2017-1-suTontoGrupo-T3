@@ -17,7 +17,13 @@ from django.conf.urls import url, include
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^$', views.login, name='login'),
+    # app/
+    url(r'^index/$', views.index, name='index'),
+    # app/login/
+    url(r'^login/$', views.login, name='login'),
+    url(r'^gestion-productos/$', views.gestion_productos, name='gestion-productos'),
+    url(r'^$', views.home, name='home'),
+    url(r'^$', views.signup, name='signup'),
+    url(r'^$', views.vendedor_profile, name='vendedor-profile'),
 
 ]
