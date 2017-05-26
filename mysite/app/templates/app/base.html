@@ -46,14 +46,18 @@
                 <li><a href="{% url 'login' %}"><i class="material-icons">account_circle</i>Iniciar Sesión</a></li>
                 <!--<li><a href="{% url 'login' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>-->
                 <li><div class="divider"></div></li>
+
+                {% block swichActivo %}
                 <li><a class="subheader">Activo</a></li>
                 <li>
                     <div class="switch" style="margin-left: 80px;">
                         <label>
-                            No<input type="checkbox"><span class="lever"></span>Si
+                            No<input type="checkbox"><span class="lever"></span>Si <!-- Activo o no-->
                         </label>
                     </div>
                 </li>
+                {% endblock %}
+
                 <li><a class="subheader">Filtros</a></li>
                 <li>
                     <div class="switch" style="margin-left: 10px;">
