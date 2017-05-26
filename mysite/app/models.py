@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+
 # Create your models here.
 
 
@@ -22,5 +23,26 @@ class Vendedor(models.Model):
                                 on_delete=models.CASCADE,
                                 primary_key=True,
                                 )
-class Ambulante(Vendedor):
-    check_in = models.
+
+
+class VendedorAmbulante(Vendedor):
+    check_in = models.BooleanField
+
+
+class VendedorFijo(Vendedor):
+    apertura = models.TimeField
+    cierre = models.TimeField
+
+
+class Favoritos(models.Model):
+    alumno = models.OneToOneField(UserInfo,
+                                  on_delete=models.CASCADE,
+                                  primary_key=False,
+                                  )
+    favorito = models.OneToOneField(Vendedor,
+                                    on_delete=models.CASCADE,
+                                    primary_key=False
+                                    )
+
+
+
