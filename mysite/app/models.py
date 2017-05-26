@@ -44,3 +44,14 @@ class Favoritos(models.Model):
                                     on_delete=models.CASCADE,
                                     primary_key=False
                                     )
+
+class Productos(models.Model):
+    nombre = models.CharField(max_length=50)
+    user = models.OneToOneField(Vendedor,
+                                on_delete=models.CASCADE,
+                                )
+    precio = models.CharField(max_length=50)
+    descripcion = models.CharField(max_length=100)
+    categoria = models.CharField(max_length=50)
+    stock = models.ImageField
+    imagen = models.ImageField(upload_to='app/static/')
