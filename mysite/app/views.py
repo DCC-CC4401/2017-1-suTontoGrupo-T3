@@ -26,3 +26,6 @@ def signup(request):
 
 def vendedor_profile(request):
     return render(request, 'app/vendedor_profile.html')
+
+def vendedor_edit(request):
+    return render(request, 'app/vendedor_edit.html')

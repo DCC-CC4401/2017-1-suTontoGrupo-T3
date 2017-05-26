@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^home/$', views.home, name='home'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^vendedor_profile$', views.vendedor_profile, name='vendedor_profile'),
+    url(r'^vendedor_edit$', views.vendedor_edit, name='vendedor_edit'),
 
 ]
