@@ -15,20 +15,19 @@
         <div class="section"></div>
 
         <div class="container">
+            <!--Div de la cosa gris-->
             <div class="z-depth-1 grey lighten-4 row"
                  style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
-                <form class="col s12 m12" method="post">
+                <form class="col s12 m12" method="post" action="vendedor_profile" >{% csrf_token %}
 
-
+                    <div>Cambiar nombre:</div>
                     <div class='row'>
                         <div class='input-field col s12 m12'>
                             <input class='validate' type='text' name='nombre' id='nombre'/>
                             <label style="text-align: center" for='nombre'>Edita tu nombre</label>
                         </div>
                     </div>
-
-                </form>
 
                 <div>
                     Cambiar avatar:
@@ -44,16 +43,24 @@
                     <input class="with-gap" name="group1" type="radio" id="test4"/>
                     <label for="test4"><img style="max-width: 50px;" src="../static/img/AvatarVendedor4.png"></label>
                 </div>
+                <div class="section"></div>
+                <div class="section"></div>
+                <div class="section"></div>
+                <div> Cambiar foto de perfil:</div>
+                <div class="section">
+                    <input type="file" name="file"/>
 
+                </div>
 
+                    <div class='row'>
+                        <button type='submit' name='btn_login' class='col l6 offset-l3 btn btn-large waves-effect teal'>
+                            Guardar Cambios
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            </form>
         </div>
-        </div>
-        <div style="text-align: center;"><a class="grey-text"> ¿Ya tienes una cuenta? </a></a><a
-                href="{% url 'login' %}">Inicia sesión</a></div>
-
 
         <div class="section"></div>
         <div class="section"></div>
