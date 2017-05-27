@@ -19,38 +19,42 @@
             <div class="z-depth-1 grey lighten-4 row"
                  style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
-                <form class="col s12 m12" method="post" action="vendedor_profile" >{% csrf_token %}
+                <form class="col s12 m12" method="post" action="vendedor_profile">{% csrf_token %}
 
                     <div>Cambiar nombre:</div>
                     <div class='row'>
                         <div class='input-field col s12 m12'>
-                            <input class='validate' type='text' name='nombre' id='nombre'/>
+                            <input id="your_name" type="text" name="your_name" value="Yolanda">
                             <label style="text-align: center" for='nombre'>Edita tu nombre</label>
                         </div>
                     </div>
 
-                <div>
-                    Cambiar avatar:
-                </div>
+                    <div>
+                        Cambiar avatar:
+                    </div>
 
-                <div class="col s12 l6">
-                    <input class="with-gap" name="group1" type="radio" id="test1"/>
-                    <label for="test1"><img style="max-width: 50px;" src="../static/img/AvatarVendedor1.png"></label>
-                    <input class="with-gap" name="group1" type="radio" id="test2"/>
-                    <label for="test2"><img style="max-width: 50px;" src="../static/img/AvatarVendedor2.png"></label>
-                    <input class="with-gap" name="group1" type="radio" id="test3"/>
-                    <label for="test3"><img style="max-width: 50px;" src="../static/img/AvatarVendedor3.png"></label>
-                    <input class="with-gap" name="group1" type="radio" id="test4"/>
-                    <label for="test4"><img style="max-width: 50px;" src="../static/img/AvatarVendedor4.png"></label>
-                </div>
-                <div class="section"></div>
-                <div class="section"></div>
-                <div class="section"></div>
-                <div> Cambiar foto de perfil:</div>
-                <div class="section">
-                    <input type="file" name="file"/>
+                    <div class="col s12 l6">
+                        <input class="with-gap" name="group1" type="radio" id="test1"/>
+                        <label for="test1"><img style="max-width: 50px;"
+                                                src="../static/img/AvatarVendedor1.png"></label>
+                        <input class="with-gap" name="group1" type="radio" id="test2"/>
+                        <label for="test2"><img style="max-width: 50px;"
+                                                src="../static/img/AvatarVendedor2.png"></label>
+                        <input class="with-gap" name="group1" type="radio" id="test3"/>
+                        <label for="test3"><img style="max-width: 50px;"
+                                                src="../static/img/AvatarVendedor3.png"></label>
+                        <input class="with-gap" name="group1" type="radio" id="test4"/>
+                        <label for="test4"><img style="max-width: 50px;"
+                                                src="../static/img/AvatarVendedor4.png"></label>
+                    </div>
+                    <div class="section"></div>
+                    <div class="section"></div>
+                    <div class="section"></div>
+                    <div> Cambiar foto de perfil:</div>
+                    <div class="section">
+                        <input type="file" name="file"/>
 
-                </div>
+                    </div>
 
                     <div class='row'>
                         <button type='submit' name='btn_login' class='col l6 offset-l3 btn btn-large waves-effect teal'>

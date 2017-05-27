@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from .forms import LoginForm
 
 
 def index(request):
@@ -9,7 +10,15 @@ def index(request):
 
 
 def login(request):
-    return render(request, 'app/login.html')
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            # procesaaar
+            return render(request, 'app/vendedor_profile.html', )
+        else:
+            form = LoginForm()
+
+        return render(request, 'app/login.html', {'form': form})
 
 
 def gestion_productos(request):
@@ -25,7 +34,7 @@ def signup(request):
 
 
 def vendedor_profile(request):
-    return render(request, 'app/vendedor_profile.html')
+    return render(request, 'app/vendedor_profile.html', )
 
 
 def vendedor_profileAlumno(request):
@@ -38,3 +47,7 @@ def vendedor_edit(request):
 
 def editar_producto(request):
     return render(request, 'app/editar_producto.html')
+
+
+def iniciar():
+    vendedor_profile()
