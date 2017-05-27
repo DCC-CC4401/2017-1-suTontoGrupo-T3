@@ -10,15 +10,14 @@ def index(request):
 
 
 def login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            # procesaaar
-            return render(request, 'app/vendedor_profile.html', )
-        else:
-            form = LoginForm()
+    form = LoginForm(request.POST)
+    if request.method == 'POST' and form.is_valid():
+        # procesaaar
+        return render(request, 'app/vendedor_profile.html', )
+    else:
+        form = LoginForm()
 
-        return render(request, 'app/login.html', {'form': form})
+    return render(request, 'app/login.html', {'form': form})
 
 
 def gestion_productos(request):
