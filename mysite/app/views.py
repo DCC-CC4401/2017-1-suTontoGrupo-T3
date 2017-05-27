@@ -29,3 +29,6 @@ def vendedor_profile(request):
 
 def vendedor_edit(request):
     return render(request, 'app/vendedor_edit.html')
+
+def editar_producto(request):
+    return render(request, 'app/editar_producto.html')
