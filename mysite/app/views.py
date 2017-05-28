@@ -50,26 +50,29 @@ def vendedor_profile(request):
 
 #informacion de test
 pizza = {'nombre': 'Pizza',
-         'precio': 1300,
+         'precio': '$1.300',
          'descripcion': 'Deliciosa pizza hecha con masa casera, viene disponible en 3 tipos.',
          'categoria': 'Almuerzos',
          'stock': 20,
-         'imagen': ''}
+         'icono': "../../static/img/pizza.png",
+         'imagen' : "#modal1"}
 
 menu_arroz = {'nombre': 'Menú de arroz',
-              'precio': 2500,
+              'precio': '$2.500',
               'descripcion': 'Almuerzo de arroz con pollo arvejado.',
               'categoria': 'Almuerzos',
               'stock': 40,
-              'imagen': ''}
+              'icono': "../../static/img/rice.png",
+              'imagen' : "#modal2"}
 
 jugo = {'nombre': 'Jugo',
         'user': '',
-        'precio': 300,
+        'precio': '$300',
         'descripcion': 'Jugo en caja sabor durazno.',
         'categoria': 'Snack',
         'stock': 40,
-        'imagen': ''}
+        'icono': "../../static/img/juice.png",
+        'imagen' : "#modal3"}
 
 info_vendedor = {'nombre': 'Michael Jackson',
                  'tipo_vendedor': 'Vendedor Fijo',
