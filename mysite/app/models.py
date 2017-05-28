@@ -57,3 +57,4 @@ class Productos(models.Model):
     categoria = models.CharField(max_length=50)
     stock = models.ImageField
     imagen = models.ImageField(upload_to='app/static/')
+    imgReferencia = models.ImageField(upload_to='app/static/')
