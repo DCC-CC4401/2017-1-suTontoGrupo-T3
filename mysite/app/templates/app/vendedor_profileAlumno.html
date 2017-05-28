@@ -35,9 +35,9 @@
                     <div class="row">
                         <div class="col s3 offset-s2 hide-on-med-and-down">
                             <!--Debe recibir el nombre desde el controlador-->
-                            <h4 class="card-title grey-text flow-text text-darken-4">Yolanda Martinez</h4>
+                            <h4 class="card-title grey-text flow-text text-darken-4">{{nombre}}</h4>
                             <!--Debe recibir el tipo de vendedor desde el controlador-->
-                            <p class="medium-small flow-text grey-text">&emsp;&emsp;&ensp;Vendedor Fijo</p>
+                            <p class="medium-small flow-text grey-text">&emsp;&emsp;&ensp;{{tipo_vendedor}}</p>
                             <!--if(tipo==fijo){-->
                             <!--p class="flow-text text-darken-4" style="font-size: 0.88rem;">
                                 &emsp;&emsp;Horario: <a class="light-green-text">12:30-14:15</a>
@@ -47,7 +47,7 @@
                         <div class="col s3 l2 hide-on-med-and-down center-align">
                             <h4 class="card-title flow-text text-darken-4">Estado</h4>
                             <!--if(tipo==fijo && horario entre sus horarios || tipo==ambulante && estado==activo)-->
-                            <p class="medium-small flow-text light-green-text">Disponible</p>
+                            <p class="medium-small flow-text light-green-text">{{estado}}</p>
                             <!--else { lo mismo de arriba pero No disponible-->
                         </div>
 
@@ -56,7 +56,7 @@
                             <h8 class=" grey-text flow-text text-darken-4" style="font-size: 1.3rem;">Formas de pago
                             </h8>
                             <!--Hacer rollbar con las opciones-->
-                            <p class="medium-small flow-text grey-text">Efectivo</p>
+                            <p class="medium-small flow-text grey-text">{{formas_de_pago}}</p>
                         </div>
                         <div class="col s3 l2 hide-on-med-and-down center-align">
 
@@ -75,9 +75,9 @@
 
                 <div class="row show-on-medium-and-down hide-on-med-and-up">
                     <div class="col s4 offset-s2">
-                        <h4 class="card-title grey-text flow-text text-darken-4">Yolanda Martinez</h4>
+                        <h4 class="card-title grey-text flow-text text-darken-4">{{nombre}}</h4>
                         <!--if(tipo del vendedor == Fijo){
-                        <p class="medium-small flow-text grey-text">&ensp;Vendedor Fijo</p>
+                        <p class="medium-small flow-text grey-text">&ensp;{{tipo_vendedor}}</p>
                         <p class="flow-text text-darken-4" style="font-size: 0.88rem;">
                             &ensp;Horario: <a class="light-green-text">12:30-14:15</a>
                         </p>
@@ -96,12 +96,12 @@
                     </div>
                     <div class="col s3 m2 l12 offset-s1">
                         <p class="flow-text text-darken-4">Estado</p>
-                        <p class="medium-small flow-text light-green-text">Disponible</p>
+                        <p class="medium-small flow-text light-green-text">{{estado}}</p>
                     </div>
 
                     <div class="col s3 m2 l12 offset-s1"> <!--offset-s2-->
                         <p class=" grey-text flow-text text-darken-4" style="font-size: 1.3rem;">Formas de pago</p>
-                        <p class="medium-small flow-text grey-text">Efectivo</p>
+                        <p class="medium-small flow-text grey-text">{{formas_de_pago}}</p>
                     </div>
 
                     <!--<div class="col s3 offset-s2 offset-l10">

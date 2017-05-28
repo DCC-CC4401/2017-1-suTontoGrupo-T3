@@ -48,8 +48,38 @@ def vendedor_profile(request):
     return render(request, 'app/vendedor_profile.html', )
 
 
+#informacion de test
+pizza = {'nombre': 'Pizza',
+         'precio': 1300,
+         'descripcion': 'Deliciosa pizza hecha con masa casera, viene disponible en 3 tipos.',
+         'categoria': 'Almuerzos',
+         'stock': 20,
+         'imagen': ''}
+
+menu_arroz = {'nombre': 'Menú de arroz',
+              'precio': 2500,
+              'descripcion': 'Almuerzo de arroz con pollo arvejado.',
+              'categoria': 'Almuerzos',
+              'stock': 40,
+              'imagen': ''}
+
+jugo = {'nombre': 'Jugo',
+        'user': '',
+        'precio': 300,
+        'descripcion': 'Jugo en caja sabor durazno.',
+        'categoria': 'Snack',
+        'stock': 40,
+        'imagen': ''}
+
+info_vendedor = {'nombre': 'Michael Jackson',
+                 'tipo_vendedor': 'Vendedor Fijo',
+                 'estado': 'Disponible',
+                 'formas_de_pago': 'Efectivo',
+                 'menus': [pizza, menu_arroz, jugo]
+                 }
+
 def vendedor_profileAlumno(request):
-    return render(request, 'app/vendedor_profileAlumno.html')
+    return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
 
 
 def vendedor_edit(request):
