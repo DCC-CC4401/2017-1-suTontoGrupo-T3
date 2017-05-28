@@ -27,9 +27,7 @@ def login(request):
             else :
                 return render(request,'app/vendedor_profileAlumno.html',{'usuario':usuario})
     else:
-        form = LoginForm()
-
-    return render(request, 'app/login.html', {'form': form})
+        return render(request, 'app/login.html', {'form': form})
 
 
 def gestion_productos(request):
@@ -41,6 +39,26 @@ def home(request):
 
 
 def signup(request):
+    form = LoginForm(request.POST)
+    if (request.method == 'POST' and form.is_valid()):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        usertype = form.cleaned_data['usertype']
+        email = form.cleaned_data['email']
+        hora_inicio = form.cleaned_data['hora_inicio']
+        hora_final = form.cleaned_data['hora_final']
+        efectivo = form.cleaned_data['efectivo']
+        tarjeta_credito = form.cleaned_data['tarjeta_credito']
+        tarjeta_debito = form.cleaned_data['tarjeta_debito']
+        tarjeta_junaeb = form.cleaned_data['tarjeta_junaeb']
+        avatar1 = form.cleaned_data['avatar1']
+        avatar2 = form.cleaned_data['avatar2']
+        avatar3 = form.cleaned_data['avatar3']
+        avatar4 = form.cleaned_data['avatar4']
+
+        if (usertype == 3): # es un cliente
+
+            cliente = UserInfo(user=username, tipo=usertype)
     return render(request, 'app/signup.html')
 
 
