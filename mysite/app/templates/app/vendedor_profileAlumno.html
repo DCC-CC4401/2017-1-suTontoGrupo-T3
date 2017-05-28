@@ -61,42 +61,15 @@
                         <div class="col s3 l2 hide-on-med-and-down center-align">
 
                             <div class="switch" style="margin-left: 10px;">
-                                <!--if(tipo==fijo)-->
-                                {% block swichActivo %}
-
-
-                                    <!--else{
-                                    block y en block van aqui
-        -->
-
-                                    <li><a class="subheader">Activo</a></li>
-                                    <li>
-                                        <div class="switch" style="margin-left: 80px;">
-                                            <label>
-                                                No<input type="checkbox"><span class="lever"></span>Si
-                                                <!-- Activo o no-->
-                                            </label>
-                                        </div>
-                                    </li>
-                                {% endblock %}
                                 <label>
                                     <h4 class="card-title grey-text flow-text text-darken-4">Favorito</h4>
-                                    <!--<input type="checkbox"><span class="lever"></span>-->
-                                    <h6><i class="material-icons amber-text">grade</i>
-                                        <!--Este numero tiene que venir del controlador-->
-                                        <span class=" grey-text flow-text text-darken-4"
-                                              style="font-size:24px; line-height:35px;">42</span>
-                                    </h6>
+                                    <label>
+                                        No<input type="checkbox"><span class="lever"></span>Si
+                                        <!-- Activo o no-->
+                                    </label>
                                 </label>
                             </div>
                         </div>
-                    </div>
-                    <!--botoncito para editar!-->
-                    <div class="col s3 l2 hide-on-med-and-down right-align">
-                        <a class="btn-floating activator waves-effect waves-light darken-2"
-                           href="{% url 'vendedor_edit' %}">
-                            <i class="material-icons">mode_edit</i>
-                        </a>
                     </div>
                 </div>
 
@@ -139,12 +112,6 @@
                             </label>
                         </div>
                     </div>-->
-                    <div class="col s4 offset-s8 right-align"> <!--offset-s4-->
-                        <a class="btn-floating activator waves-effect waves-light darken-2"
-                           href="{% url 'vendedor_edit' %}">
-                            <i class="material-icons">mode_edit</i>
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -171,11 +138,6 @@
                                                     <span class="card-title activator grey-text text-darken-4">Pizza<i
                                                             class="material-icons right">more_vert</i></span>
                                                     <p><a class="teal-text">$1.300</a></p>
-                                                    <p align="right"><a
-                                                            class="btn-floating activator waves-effect waves-light darken-2"
-                                                            href="{% url 'editar_producto' %}">
-                                                        <i class="material-icons">mode_edit</i>
-                                                    </a></p>
                                                     <div id="modal1" class="modal">
                                                         <div class="modal-content">
                                                             <img class="activator responsive-img center-block"
@@ -252,11 +214,6 @@
                                                     <span class="card-title activator grey-text text-darken-4">Menú de arroz<i
                                                             class="material-icons right">more_vert</i></span>
                                                     <p><a class="teal-text">$2.500</a></p>
-                                                    <p align="right"><a
-                                                            class="btn-floating activator waves-effect waves-light darken-2"
-                                                            href="{% url 'editar_producto' %}">
-                                                        <i class="material-icons">mode_edit</i>
-                                                    </a></p>
                                                 </div>
                                                 <div class="card-reveal">
                                                     <span class="card-title grey-text text-darken-4">Menú de arroz<i
@@ -288,11 +245,6 @@
                                                     <span class="card-title activator grey-text text-darken-4">Jugo<i
                                                             class="material-icons right">more_vert</i></span>
                                                     <p><a class="teal-text">$300</a></p>
-                                                    <p align="right"><a
-                                                            class="btn-floating activator waves-effect waves-light darken-2"
-                                                            href="{% url 'editar_producto' %}">
-                                                        <i class="material-icons">mode_edit</i>
-                                                    </a></p>
                                                 </div>
                                                 <div class="card-reveal">
                                                     <span class="card-title grey-text text-darken-4">Jugo<i
@@ -316,10 +268,6 @@
 
                         </div>
 
-                    </div>
-                    <div class='row'>
-                        <a class='col l5 offset-l4 btn btn-large waves-effect button teal'
-                           href="{% url 'gestion_productos' %}">Agregar Item</a>
                     </div>
                 </div>
             </div>
