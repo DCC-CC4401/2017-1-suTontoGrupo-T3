@@ -57,6 +57,14 @@ pizza = {'nombre': 'Pizza',
          'icono': "../../static/img/pizza.png",
          'imagen' : "#modal1"}
 
+pollo = {'nombre': 'Pollo',
+         'precio': '$1.700',
+         'descripcion': 'Rico pollo hecho con amor',
+         'categoria': 'Almuerzos',
+         'stock': 30,
+         'icono': "../../static/img/chicken2.png",
+         'imagen' : "#modal2"}
+
 menu_arroz = {'nombre': 'Menú de arroz',
               'precio': '$2.500',
               'descripcion': 'Almuerzo de arroz con pollo arvejado.',
@@ -78,11 +86,18 @@ info_vendedor = {'nombre': 'Michael Jackson',
                  'tipo_vendedor': 'Vendedor Fijo',
                  'estado': 'Disponible',
                  'formas_de_pago': 'Efectivo',
-                 'menus': [pizza, menu_arroz, jugo]
-                 }
+                 'menus': [pizza, menu_arroz, jugo],
+                 'imagen' : "../../static/img/AvatarVendedor6.png"}
+
+info_vendedor2 = {'nombre': 'Rata Touille',
+                 'tipo_vendedor': 'Vendedor Ambulante',
+                 'estado': 'Disponible',
+                 'formas_de_pago': 'Tarjeta de credito',
+                 'menus': [pizza, pollo, menu_arroz],
+                 'imagen' : "../../static/img/AvatarVendedor3.png"}
 
 def vendedor_profileAlumno(request):
-    return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
+    return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor2)
 
 
 def vendedor_edit(request):
