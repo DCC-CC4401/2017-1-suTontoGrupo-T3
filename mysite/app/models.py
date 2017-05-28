@@ -56,6 +56,6 @@ class Productos(models.Model):
     precio = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=100)
     categoria = models.CharField(max_length=50)
-    stock = models.ImageField
+    stock = models.IntegerField
     imagen = models.ImageField(upload_to='app/static/')
     imgReferencia = models.ImageField(upload_to='app/static/')
