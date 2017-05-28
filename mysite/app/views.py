@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from .forms import LoginForm
+from .forms import EditVForm
 from .models import *
 from django.contrib import auth
 
@@ -62,6 +63,8 @@ def signup(request):
     return render(request, 'app/signup.html')
 
 
+
+
 # informacion de test
 pizza = {'nombre': 'Pizza',
          'precio': '$1.300',
@@ -116,9 +119,9 @@ info_vendedor2 = {'nombre': 'Rata Touille',
                   'menus': [pizza, pollo, menu_arroz],
                   'imagen': "../../static/img/AvatarVendedor3.png"}
 
-
 def vendedor_profile(request):
     return render(request, 'app/vendedor_profile.html')
+
 
 
 def vendedor_profileAlumno(request):
@@ -126,7 +129,24 @@ def vendedor_profileAlumno(request):
 
 
 def vendedor_edit(request):
-    return render(request, 'app/vendedor_edit.html')
+    form = EditVForm(request.POST)
+    # formulario lleno, edicion de datos
+    if request.method == 'POST' and form.is_valid():
+        # obtengo mail y pass
+        nombre = form.cleaned_data['your_name']
+        foto = form.cleaned_data['file']
+        # si alguno es != de None lo actualizo
+        if (nombre != None):
+            usuario= auth.get_user(request)
+            usuario.username= nombre
+            usuario.save()
+        if(foto != None):
+            usuario=auth.get_user(request)
+    else:
+        form= EditVForm()
+        return render(request,'app/vendedor_edit.html',{'form': form})
+
+        return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
 
 
 def editar_producto(request):

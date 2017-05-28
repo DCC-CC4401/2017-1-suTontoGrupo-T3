@@ -31,6 +31,7 @@ class VendedorAmbulante(Vendedor):
     check_in = models.BooleanField
 
 
+
 class VendedorFijo(Vendedor):
     apertura = models.TimeField
     cierre = models.TimeField
