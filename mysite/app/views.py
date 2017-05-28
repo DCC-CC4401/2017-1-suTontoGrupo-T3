@@ -100,7 +100,7 @@ info_vendedor2 = {'nombre': 'Rata Touille',
 
 
 def vendedor_profile(request):
-    return render(request, 'app/vendedor_profile.html', context=dic)
+    return render(request, 'app/vendedor_profile.html')
 
 
 def vendedor_profileAlumno(request):
