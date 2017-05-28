@@ -62,25 +62,36 @@ def signup(request):
             cliente = UserInfo(user=username, tipo=usertype)
     return render(request, 'app/signup.html')
 
-
-
-
 # informacion de test
-pizza = {'nombre': 'Pizza',
+pizza_clasica = {'nombre': 'Pizza Clasica',
+         'user' : 'Rata Touille',
          'precio': '$1.300',
-         'descripcion': 'Deliciosa pizza hecha con masa casera, viene disponible en 3 tipos.',
+         'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Jamon, Tomate',
          'categoria': 'Almuerzos',
          'stock': 20,
          'icono': "../../static/img/pizza.png",
          'imagen': "#modal1"}
 
-pepperoni = {'descripcion': '-Peperoni: Queso mozzarella, Pepperoni'}
+pizza_peperoni = {'nombre': 'Pizza Pepperoni',
+         'user' : 'Michael Jackson',
+         'precio': '$1.300',
+         'descripcion': 'Deliciosa pizza con: Queso mozzarella, Pepperoni',
+         'categoria': 'Almuerzos',
+         'stock': 20,
+         'icono': "../../static/img/pizza.png",
+         'imagen': "#modal1"}
 
-clasica = {'descripcion': '-Clásica: Queso mozzarella, Aceitunas, Jamon, Tomate'}
-
-vegetariana = {'descripcion': '-Vegetariana: Queso mozzarella, Aceitunas, Champiñones, Tomate'}
+pizza_vegetariana = {'nombre': 'Pizza Vegetariana',
+         'user' : 'Michael Jackson',
+         'precio': '$1.300',
+         'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Champiñones, Tomate',
+         'categoria': 'Almuerzos',
+         'stock': 20,
+         'icono': "../../static/img/pizza.png",
+         'imagen': "#modal1"}
 
 pollo = {'nombre': 'Pollo',
+         'user' : 'Rata Touille',
          'precio': '$1.700',
          'descripcion': 'Rico pollo hecho con amor',
          'categoria': 'Almuerzos',
@@ -89,6 +100,7 @@ pollo = {'nombre': 'Pollo',
          'imagen': "#modal2"}
 
 menu_arroz = {'nombre': 'Menú de arroz',
+              'user' : 'Rata Touille',
               'precio': '$2.500',
               'descripcion': 'Almuerzo de arroz con pollo arvejado.',
               'categoria': 'Almuerzos',
@@ -97,7 +109,7 @@ menu_arroz = {'nombre': 'Menú de arroz',
               'imagen': "#modal2"}
 
 jugo = {'nombre': 'Jugo',
-        'user': '',
+        'user': 'Rata Touille',
         'precio': '$300',
         'descripcion': 'Jugo en caja sabor durazno.',
         'categoria': 'Snack',
@@ -105,18 +117,28 @@ jugo = {'nombre': 'Jugo',
         'icono': "../../static/img/juice.png",
         'imagen': "#modal3"}
 
+menus = [pizza_clasica, pizza_peperoni, pizza_vegetariana, pollo, menu_arroz, jugo]
+
+def get_menus(nombre):
+    menus_usuario = []
+    for comida in menus:
+        if comida['user'] == nombre:
+            menus_usuario.append(comida)
+    return menus_usuario
+
+
 info_vendedor = {'nombre': 'Michael Jackson',
                  'tipo_vendedor': 'Vendedor Fijo',
                  'estado': 'Disponible',
                  'formas_de_pago': 'Efectivo',
-                 'menus': [pizza, menu_arroz, jugo],
+                 'menus': get_menus('Michael Jackson'),
                  'imagen': "../../static/img/AvatarVendedor6.png"}
 
 info_vendedor2 = {'nombre': 'Rata Touille',
                   'tipo_vendedor': 'Vendedor Ambulante',
                   'estado': 'Disponible',
                   'formas_de_pago': 'Tarjeta de credito',
-                  'menus': [pizza, pollo, menu_arroz],
+                  'menus': get_menus('Rata Touille'),
                   'imagen': "../../static/img/AvatarVendedor3.png"}
 
 def vendedor_profile(request):
