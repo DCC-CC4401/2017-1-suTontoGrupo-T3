@@ -26,6 +26,7 @@ class Vendedor(models.Model):
     nombreFotoPerfil = models.CharField(max_length=50)
     archivoFotoPerfil = models.ImageField(upload_to='app/static/')
 
+
 class VendedorAmbulante(Vendedor):
     check_in = models.BooleanField
 
@@ -44,6 +45,7 @@ class Favoritos(models.Model):
                                     on_delete=models.CASCADE,
                                     primary_key=False
                                     )
+
 
 class Productos(models.Model):
     nombre = models.CharField(max_length=50)

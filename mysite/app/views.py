@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from .forms import LoginForm
+from .models import *
+from django.contrib import auth
 
 
 def index(request):
@@ -11,9 +13,19 @@ def index(request):
 
 def login(request):
     form = LoginForm(request.POST)
+    # formulario lleno, edicion de datos
     if request.method == 'POST' and form.is_valid():
-        # procesaaar
-        return render(request, 'app/vendedor_profile.html', )
+        # obtengo mail y pass
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        # veo si estan en la bd
+        if UserInfo.objects.get(user=username) != None:
+            auth.login(request, username)
+            usuario = UserInfo.objects.get(user=username)
+            if usuario.tipo =='vendedor':
+                return render(request, 'app/vendedor_profile.html',{'usuario':usuario})
+            else :
+                return render(request,'app/vendedor_profileAlumno.html',{'usuario':usuario})
     else:
         form = LoginForm()
 
