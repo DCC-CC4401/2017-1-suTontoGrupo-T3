@@ -1,8 +1,10 @@
 {% extends 'app/base.html' %}
 {% block content %}
+    <img src="../static/img/mapa.png" alt="Mountain View" style="width:1280px;height:520px;">
+    <!--
     <div id="map"></div>
-
     <script>
+        
         function initMap() {
             var infoWindow;
             var beau850 = {lat: -33.457785, lng: -70.663808};
@@ -87,9 +89,10 @@
                 'Error: The Geolocation service failed.' :
                 'Error: Your browser doesn\'t support geolocation.');
             infoWindow.open(map);
-        }
+        }  
     </script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=KEY&callback=initMap">
     </script>
+    -->
 {% endblock %}
