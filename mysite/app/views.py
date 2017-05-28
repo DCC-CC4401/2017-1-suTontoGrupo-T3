@@ -45,8 +45,6 @@ def signup(request):
     return render(request, 'app/signup.html')
 
 
-def vendedor_profile(request):
-    return render(request, 'app/vendedor_profile.html', )
 
 
 # informacion de test
@@ -57,6 +55,12 @@ pizza = {'nombre': 'Pizza',
          'stock': 20,
          'icono': "../../static/img/pizza.png",
          'imagen': "#modal1"}
+
+pepperoni = {'descripcion': '-Peperoni: Queso mozzarella, Pepperoni'}
+
+clasica = {'descripcion': '-Clásica: Queso mozzarella, Aceitunas, Jamon, Tomate'}
+
+vegetariana = {'descripcion': '-Vegetariana: Queso mozzarella, Aceitunas, Champiñones, Tomate'}
 
 pollo = {'nombre': 'Pollo',
          'precio': '$1.700',
@@ -96,6 +100,10 @@ info_vendedor2 = {'nombre': 'Rata Touille',
                   'formas_de_pago': 'Tarjeta de credito',
                   'menus': [pizza, pollo, menu_arroz],
                   'imagen': "../../static/img/AvatarVendedor3.png"}
+
+def vendedor_profile(request):
+    return render(request, 'app/vendedor_profile.html')
+
 
 
 def vendedor_profileAlumno(request):
