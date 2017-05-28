@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from .forms import LoginForm
+from .forms import EditVForm
 from .models import *
 from django.contrib import auth
 
@@ -22,10 +23,10 @@ def login(request):
         if UserInfo.objects.get(user=username) != None:
             auth.login(request, username)
             usuario = UserInfo.objects.get(user=username)
-            if usuario.tipo =='vendedor':
-                return render(request, 'app/vendedor_profile.html',{'usuario':usuario})
-            else :
-                return render(request,'app/vendedor_profileAlumno.html',{'usuario':usuario})
+            if usuario.tipo == 'vendedor':
+                return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
+            else:
+                return render(request, 'app/vendedor_profileAlumno.html', {'usuario': usuario})
     else:
         form = LoginForm()
 
@@ -48,14 +49,14 @@ def vendedor_profile(request):
     return render(request, 'app/vendedor_profile.html', )
 
 
-#informacion de test
+# informacion de test
 pizza = {'nombre': 'Pizza',
          'precio': '$1.300',
          'descripcion': 'Deliciosa pizza hecha con masa casera, viene disponible en 3 tipos.',
          'categoria': 'Almuerzos',
          'stock': 20,
          'icono': "../../static/img/pizza.png",
-         'imagen' : "#modal1"}
+         'imagen': "#modal1"}
 
 pollo = {'nombre': 'Pollo',
          'precio': '$1.700',
@@ -63,7 +64,7 @@ pollo = {'nombre': 'Pollo',
          'categoria': 'Almuerzos',
          'stock': 30,
          'icono': "../../static/img/chicken2.png",
-         'imagen' : "#modal2"}
+         'imagen': "#modal2"}
 
 menu_arroz = {'nombre': 'Menú de arroz',
               'precio': '$2.500',
@@ -71,7 +72,7 @@ menu_arroz = {'nombre': 'Menú de arroz',
               'categoria': 'Almuerzos',
               'stock': 40,
               'icono': "../../static/img/rice.png",
-              'imagen' : "#modal2"}
+              'imagen': "#modal2"}
 
 jugo = {'nombre': 'Jugo',
         'user': '',
@@ -80,28 +81,46 @@ jugo = {'nombre': 'Jugo',
         'categoria': 'Snack',
         'stock': 40,
         'icono': "../../static/img/juice.png",
-        'imagen' : "#modal3"}
+        'imagen': "#modal3"}
 
 info_vendedor = {'nombre': 'Michael Jackson',
                  'tipo_vendedor': 'Vendedor Fijo',
                  'estado': 'Disponible',
                  'formas_de_pago': 'Efectivo',
                  'menus': [pizza, menu_arroz, jugo],
-                 'imagen' : "../../static/img/AvatarVendedor6.png"}
+                 'imagen': "../../static/img/AvatarVendedor6.png"}
 
 info_vendedor2 = {'nombre': 'Rata Touille',
-                 'tipo_vendedor': 'Vendedor Ambulante',
-                 'estado': 'Disponible',
-                 'formas_de_pago': 'Tarjeta de credito',
-                 'menus': [pizza, pollo, menu_arroz],
-                 'imagen' : "../../static/img/AvatarVendedor3.png"}
+                  'tipo_vendedor': 'Vendedor Ambulante',
+                  'estado': 'Disponible',
+                  'formas_de_pago': 'Tarjeta de credito',
+                  'menus': [pizza, pollo, menu_arroz],
+                  'imagen': "../../static/img/AvatarVendedor3.png"}
+
 
 def vendedor_profileAlumno(request):
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor2)
 
 
 def vendedor_edit(request):
-    return render(request, 'app/vendedor_edit.html')
+    form = EditVForm(request.POST)
+    # formulario lleno, edicion de datos
+    if request.method == 'POST' and form.is_valid():
+        # obtengo mail y pass
+        nombre = form.cleaned_data['your_name']
+        foto = form.cleaned_data['file']
+        # si alguno es != de None lo actualizo
+        if (nombre != None):
+            usuario= auth.get_user(request)
+            usuario.username= nombre
+            usuario.save()
+        if(foto != None):
+            usuario=auth.get_user(request)
+    else:
+        form= EditVForm()
+        return render(request,'app/vendedor_edit.html',{'form': form})
+
+        return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
 
 
 def editar_producto(request):
