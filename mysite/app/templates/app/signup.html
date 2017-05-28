@@ -5,6 +5,22 @@
 $(document).ready(function() {
     $('select').material_select();
 });
+
+$(function() {
+    $("#password2").keyup(function() {
+        var pass = $("#password").val();
+        if(pass == $(this).val()) {
+            $("#divCheckPasswordMatch").html("Passwords match.");
+            $("#divCheckPasswordMatch").style.color = "black";
+            $("#btn_submit").disabled = false;
+        } else {
+            $("#divCheckPasswordMatch").html("Passwords don't match!");
+            $("#divCheckPasswordMatch").style.color = "red";
+            $("#btn_submit").disabled = true;
+        }
+    });
+});
+
 </script>
 
 <div class="section"></div>
@@ -113,11 +129,12 @@ $(document).ready(function() {
               <div class='input-field col s12 m12'>
                 <input class='validate' type='password' name='password2' id='password2' required/>
                 <label style="text-align: center" for='password2'>Repite tu contraseña</label>
-              </div>
+              </div><br>
+                <div class="registrationFormAlert" id="divCheckPasswordMatch" style="text-align: center"></div>
             </div>
 
               <div class='row'>
-                <button type='submit' name='btn_login' class='col l6 offset-l3 btn btn-large waves-effect teal'>Registrarse</button>
+                <button type='submit' id="btn_submit" name='btn_login' class='col l6 offset-l3 btn btn-large waves-effect teal'>Registrarse</button>
               </div>
 
           </form>
