@@ -167,7 +167,7 @@ def get_menus(nombre):
     return menus_usuario
 
 def vendedor_profile(request):
-    usuario = "michaeljackson"
+    usuario = "Rata Touille"
     info_productos = {'menus': get_menus(usuario)}
     return render(request, 'app/vendedor_profile.html', context=info_productos)
 
