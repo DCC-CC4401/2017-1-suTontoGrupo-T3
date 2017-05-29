@@ -6,10 +6,16 @@
             $('.modal').modal();
         });
 
-        $(document).ready(function (tipo, estado, hora_i, hora_f) {
+        $(document).ready(function () {
             <!--if(tipo==fijo && horario entre sus horarios || tipo==ambulante && estado==activo)-->
-            var hourMin = new Date().getHourMinute();
-            if((tipo=="fijo" && hora_i <= hourMin && hora_f >= hourMin) || (tipo="ambulante" && estado==true)) {
+            var actualHour = new Date().getHour();
+            var actualMin = new Date().getMinutes();
+            print("Fecha: " + actualHour + " " + actualMin);
+
+            if(({{ info_vendedor.tipo_vendedor }}=="fijo"
+               // ({{ info_vendedor.hora_inicio }} <= int(actualHour)) && {{ info_vendedor.hora_fin }} >= actualTime.valueOf()
+                    || {{ info_vendedor.tipo_vendedor }}=="ambulante"
+                        && {{ info_vendedor.estado }}==True) {
                 $('#estado').value = "Disponible"
             } else {
                 $('#estado').value = "No Disponible"
