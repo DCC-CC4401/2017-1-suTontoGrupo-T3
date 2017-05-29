@@ -49,7 +49,10 @@ class Favoritos(models.Model):
 
 class Productos(models.Model):
     nombre = models.CharField(max_length=50)
-    user = models.CharField(max_length=100)
+    user = models.OneToOneField(Vendedor,
+                                on_delete=models.CASCADE,
+                                primary_key=False,
+                                )
     precio = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=100)
     categoria = models.CharField(max_length=50)
