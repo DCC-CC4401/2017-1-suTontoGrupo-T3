@@ -135,9 +135,9 @@ def get_menus(user):
 
 
 def vendedor_profile(request):
-    usuario = UserInfo.objects.get(is_active=1)
-    user = User.objects.get(username=usuario.user)
-    info_producto = {'menus': get_menus("ratatouille"), 'usuario': usuario, 'user': user, }
+    usuario = User.objects.get(is_active=1)
+    user = User.objects.get(username=usuario.username)
+    info_producto = {'menus': get_menus(user.username), 'usuario': usuario, 'user': user, }
     return render(request, 'app/vendedor_profile.html', context=info_producto)
 
 
@@ -208,9 +208,15 @@ def vendedor_edit(request):
 
 
 
-def editar_producto(request, value=None):
+def editar_producto(request):
     return render(request, 'app/editar_producto.html')
 
 
 def iniciar():
     vendedor_profile()
+
+
+def add_item(request):
+    user = User.objects.get(is_active=1)
+    nombre = form.cleaned_data['item']
+    prod=Productos(nombre=)

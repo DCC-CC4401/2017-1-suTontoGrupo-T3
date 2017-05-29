@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^vendedor_profileAlumno$', views.vendedor_profileAlumno, name='vendedor_profileAlumno'),
     url(r'^vendedor_edit$', views.vendedor_edit, name='vendedor_edit'),
     url(r'^editar_producto/$', views.editar_producto, name='editar_producto'),
+    url(r'^add_item/$', views.add_item, name='add_item'),
 
 ]
