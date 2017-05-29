@@ -20,6 +20,7 @@ def login(request):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
         # veo si estan en la bd
+
         if UserInfo.objects.get(user=User.objects.get(username=username)) != None:
             #auth.login(request, username)
             usuario = UserInfo.objects.get(user=User.objects.get(username=username))
@@ -173,11 +174,12 @@ def vendedor_edit(request):
             usuario.save()
         if(foto != None):
             usuario=auth.get_user(request)
+        return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
     else:
         form= EditVForm()
         return render(request,'app/vendedor_edit.html',{'form': form})
 
-        return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
+
 
 
 def editar_producto(request):
