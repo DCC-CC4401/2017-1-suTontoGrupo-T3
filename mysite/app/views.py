@@ -100,6 +100,8 @@ def signup(request):
     form = SignupForm()
     return render(request,'app/signup.html',{'form':form})
 
+<<<<<<< HEAD
+=======
 
 
 # informacion de test
@@ -157,6 +159,7 @@ jugo = {'nombre': 'Jugo',
         'icono': "juice.png",
         'imagen': "#modal3"}
 
+>>>>>>> 9b9a866c7750584cee8159dd7817c3e9fd35d6e5
 def get_info(producto):
     info = {
         'nombre' : producto.nombre,
@@ -178,19 +181,23 @@ def get_menus(user):
 
 
 def vendedor_profile(request):
-    usuario = "ratatouille"
-    info_producto = {'menus' : get_menus(usuario)}
+    usuario = UserInfo.objects.get(is_active=1)
+    info_producto = {'menus' : get_menus(usuario.username),'usuario':usuario}
     return render(request, 'app/vendedor_profile.html', context=info_producto)
 
 
 def vendedor_profileAlumno(request):
-    usuario = 'ratatouille'
+    usuario = 'michaeljackson'
     clase_user = User.objects.get(username=usuario)
     clase_info = UserInfo.objects.get(user_id=clase_user.id)
     clase_vendedor = Vendedor.objects.get(userinfo_ptr_id=clase_user.id)
-    tipo = 'Vendedor Ambulante'
     if 'fijo' in  clase_info.tipo:
+        clase_fijo = VendedorFijo.objects.get(vendedor_ptr_id=clase_user.id)
         tipo = 'Vendedor Fijo'
+        horario = str(clase_fijo.apertura) + '-' + str(clase_fijo.cierre)
+    else:
+        clase_ambulante = VendedorAmbulante.objects.get(vendedor_ptr_id=clase_user.id)
+        tipo = 'Vendedor Ambulante'
     formas_de_pago = []
     if clase_vendedor.efectivo == 1:
         formas_de_pago.append('Efectivo')
@@ -209,14 +216,15 @@ def vendedor_profileAlumno(request):
         'estado' : estado,
         'formas_de_pago' : formas_de_pago,
         'menus' : get_menus(usuario),
-        'imagen' : clase_vendedor.archivo_foto_perfil
+        'imagen' : clase_vendedor.archivo_foto_perfil,
+        'horario' : horario
     }
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
 
 def vendedor_edit(request):
 
     # formulario lleno, edicion de datos
-    usuario = User.objects.get(is_active=1)
+    usuario = UserInfo.objects.get(is_active=1)
 
     if request.method == 'POST':
         form = EditVForm(request.POST)
