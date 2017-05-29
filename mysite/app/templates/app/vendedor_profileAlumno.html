@@ -6,6 +6,22 @@
             $('.modal').modal();
         });
 
+        $(document).ready(function () {
+            <!--if(tipo==fijo && horario entre sus horarios || tipo==ambulante && estado==activo)-->
+            var actualHour = new Date().getHour();
+            var actualMin = new Date().getMinutes();
+            print("Fecha: " + actualHour + " " + actualMin);
+
+            if(({{ info_vendedor.tipo_vendedor }}=="fijo"
+               // ({{ info_vendedor.hora_inicio }} <= int(actualHour)) && {{ info_vendedor.hora_fin }} >= actualTime.valueOf()
+                    || {{ info_vendedor.tipo_vendedor }}=="ambulante"
+                        && {{ info_vendedor.estado }}==True) {
+                $('#estado').value = "Disponible"
+            } else {
+                $('#estado').value = "No Disponible"
+            }
+        })
+
     </script>
     <main>
 
@@ -52,7 +68,7 @@
                         <div class="col s3 l2 hide-on-med-and-down center-align">
                             <h4 class="card-title flow-text text-darken-4">Estado</h4>
                             <!--if(tipo==fijo && horario entre sus horarios || tipo==ambulante && estado==activo)-->
-                            <p class="medium-small flow-text light-green-text">{{estado}}</p>
+                            <p class="medium-small flow-text light-green-text" id="estado"></p>
                             <!--else { lo mismo de arriba pero No disponible-->
                         </div>
 
