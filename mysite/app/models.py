@@ -37,6 +37,9 @@ class VendedorAmbulante(Vendedor):
 class VendedorFijo(Vendedor):
     apertura = models.TimeField()
     cierre = models.TimeField()
+    #apertura = models.TimeField(default="00:00")
+    #cierre = models.TimeField(default="00:00")
+
 
 
 
@@ -53,12 +56,10 @@ class Favoritos(models.Model):
 
 class Productos(models.Model):
     nombre = models.CharField(max_length=50)
-    user = models.OneToOneField(Vendedor,
-                                primary_key=False,
-                                on_delete=models.CASCADE)
+    user = models.CharField(max_length=100)
     precio = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=100)
     categoria = models.CharField(max_length=50)
-    stock = models.IntegerField
+    stock = models.IntegerField(default=0)
     imagen = models.ImageField(upload_to='app/static/')
     img_referencia = models.ImageField(upload_to='app/static/')

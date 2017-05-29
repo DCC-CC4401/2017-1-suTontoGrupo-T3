@@ -5,8 +5,8 @@ class LoginForm(forms.Form):
     password = forms.CharField(label='Your pass', max_length=100)
 
 class EditVForm(forms.Form):
-    your_name= forms.CharField(label= 'Your name', max_length=100)
-    file= forms.FileField()
+    name= forms.CharField(label= 'Your name', max_length=100)
+    #file= forms.FileField()
 
 class SignupForm(forms.Form):
     username = forms.CharField(label='username', max_length=100)

@@ -108,75 +108,30 @@ def signup(request):
     form = SignupForm()
     return render(request,'app/signup.html',{'form':form})
 
+def get_info(producto):
+    info = {
+        'nombre' : producto.nombre,
+        'user' : producto.user,
+        'precio' : producto.precio,
+        'decripcion' : producto.descripcion,
+        'categoria' : producto.categoria,
+        'stock' : producto.stock,
+        'icono' : producto.imagen,
+        'imagen' : producto.img_referencia,
+    }
+    return info
 
+def get_menus(user):
+    productos = []
+    for i in Productos.objects.filter(user = user):
+        productos.append(get_info(i))
+    return productos
 
-# informacion de test
-pizza_clasica = {'nombre': 'Pizza Clasica',
-                 'user': 'Rata Touille',
-                 'precio': '$1.300',
-                 'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Jamon, Tomate',
-                 'categoria': 'Almuerzos',
-                 'stock': 20,
-                 'icono': "../../static/img/pizza.png",
-                 'imagen': "#modal1"}
-
-pizza_peperoni = {'nombre': 'Pizza Pepperoni',
-                  'user': 'michaeljackson',
-                  'precio': '$1.300',
-                  'descripcion': 'Deliciosa pizza con: Queso mozzarella, Pepperoni',
-                  'categoria': 'Almuerzos',
-                  'stock': 20,
-                  'icono': "../../static/img/pizza.png",
-                  'imagen': "#modal1"}
-
-pizza_vegetariana = {'nombre': 'Pizza Vegetariana',
-                     'user': 'michaeljackson',
-                     'precio': '$1.300',
-                     'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Champiñones, Tomate',
-                     'categoria': 'Almuerzos',
-                     'stock': 20,
-                     'icono': "../../static/img/pizza.png",
-                     'imagen': "#modal1"}
-
-pollo = {'nombre': 'Pollo',
-         'user': 'Rata Touille',
-         'precio': '$1.700',
-         'descripcion': 'Rico pollo hecho con amor',
-         'categoria': 'Almuerzos',
-         'stock': 30,
-         'icono': "../../static/img/chicken2.png",
-         'imagen': "#modal2"}
-
-menu_arroz = {'nombre': 'Menú de arroz',
-              'user': 'Rata Touille',
-              'precio': '$2.500',
-              'descripcion': 'Almuerzo de arroz con pollo arvejado.',
-              'categoria': 'Almuerzos',
-              'stock': 40,
-              'icono': "../../static/img/rice.png",
-              'imagen': "#modal2"}
-
-jugo = {'nombre': 'Jugo',
-        'user': 'Rata Touille',
-        'precio': '$300',
-        'descripcion': 'Jugo en caja sabor durazno.',
-        'categoria': 'Snack',
-        'stock': 40,
-        'icono': "../../static/img/juice.png",
-        'imagen': "#modal3"}
-
-menus = [pizza_clasica, pizza_peperoni, pizza_vegetariana, pollo, menu_arroz, jugo]
-
-
-def get_menus(nombre):
-    menus_usuario = []
-    for comida in menus:
-        if comida['user'] == nombre:
-            menus_usuario.append(comida)
-    return menus_usuario
 
 def vendedor_profile(request):
-    return render(request, 'app/vendedor_profile.html')
+    usuario = UserInfo.objects.get(is_active=1)
+    info_producto = {'menus' : get_menus(usuario.username),'usuario':usuario}
+    return render(request, 'app/vendedor_profile.html', context=info_producto)
 
 
 def vendedor_profileAlumno(request):
@@ -184,9 +139,13 @@ def vendedor_profileAlumno(request):
     clase_user = User.objects.get(username=usuario)
     clase_info = UserInfo.objects.get(user_id=clase_user.id)
     clase_vendedor = Vendedor.objects.get(userinfo_ptr_id=clase_user.id)
-    tipo = 'Vendedor Ambulante'
     if 'fijo' in  clase_info.tipo:
+        clase_fijo = VendedorFijo.objects.get(vendedor_ptr_id=clase_user.id)
         tipo = 'Vendedor Fijo'
+        horario = str(clase_fijo.apertura) + '-' + str(clase_fijo.cierre)
+    else:
+        clase_ambulante = VendedorAmbulante.objects.get(vendedor_ptr_id=clase_user.id)
+        tipo = 'Vendedor Ambulante'
     formas_de_pago = []
     if clase_vendedor.efectivo == 1:
         formas_de_pago.append('Efectivo')
@@ -196,34 +155,40 @@ def vendedor_profileAlumno(request):
         formas_de_pago.append('Tarjeta de Debito')
     if clase_vendedor.tarj_junaeb == 1:
         formas_de_pago.append('Tarjeta Junaeb')
+    estado = 'Inactivo'
+    if clase_user.is_active:
+        estado = 'Activo'
     info_vendedor = {
         'nombre' : clase_vendedor.nombre_visible,
         'tipo_vendedor' : tipo,
-        'estado' : clase_user.is_active,
+        'estado' : estado,
         'formas_de_pago' : formas_de_pago,
         'menus' : get_menus(usuario),
-        'imagen' : clase_vendedor.archivo_foto_perfil
+        'imagen' : clase_vendedor.archivo_foto_perfil,
+        'horario' : horario
     }
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
 
-
 def vendedor_edit(request):
-    form = EditVForm(request.POST)
+
     # formulario lleno, edicion de datos
-    usuario = User.objects.get(is_active=1)
-    if request.method == 'POST' and form.is_valid():
+    usuario = UserInfo.objects.get(is_active=1)
+
+    if request.method == 'POST':
+        form = EditVForm(request.POST)
         # obtengo mail y pass
-        nombre = form.cleaned_data['your_name']
-        foto = form.cleaned_data['file']
-        # si alguno es != de None lo actualizo
-        if nombre != None:
-            usuario.first_name = nombre
-            usuario.save()
-        if foto != None:
-            usuario = Vendedor.objects.get(user=usuario)
-            usuario.archivo_foto_perfil = foto
-            usuario.save()
-        return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
+
+        if form.is_valid():
+            nombre = form.cleaned_data['name']
+
+            if nombre != None:
+                usuario.first_name = nombre
+                usuario.save()
+
+            return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
+        else :
+            form = EditVForm()
+            return render(request, 'app/vendedor_edit.html', {'form': form, 'usuario': usuario})
     else:
         form = EditVForm()
         return render(request, 'app/vendedor_edit.html', {'form': form, 'usuario': usuario})
