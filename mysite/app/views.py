@@ -170,22 +170,14 @@ def get_info(producto):
     return info
 
 def get_menus(user):
-<<<<<<< HEAD
     productos = []
     for i in Productos.objects.filter(user = user):
         productos.append(get_info(i))
     return productos
 
-=======
-    productos = Productos.objects.get(user=user)
-    return get_info(productos)
->>>>>>> c2b586c2d5397316f5200a62bcaa80f60fbc2f7e
 
 def vendedor_profile(request):
-    usuario = "ratatouille"
-    prod = Productos.objects.get(user=usuario)
-    info_producto = {'menus' : prod}
-    return render(request, 'app/vendedor_profile.html', context=info_producto)
+    return render(request, 'app/vendedor_profile.html')
 
 
 def vendedor_profileAlumno(request):
@@ -217,7 +209,6 @@ def vendedor_profileAlumno(request):
         'imagen' : clase_vendedor.archivo_foto_perfil
     }
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
-
 
 def vendedor_edit(request):
     form = EditVForm(request.POST)
