@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from .forms import LoginForm
 from .forms import EditVForm
+from .forms import SignupForm
 from .models import *
 from django.contrib import auth
 
@@ -48,10 +49,10 @@ def home(request):
 
 
 def signup(request):
-    form = LoginForm(request.POST)
+    form = SignupForm(request.POST)
     page = "app/signup.html"
     if (request.method == 'POST' and form.is_valid()):
-        username = form.cleaned_data['username']
+        username = form.cleaned_data['nombre']
         password = form.cleaned_data['password']
         usertype = form.cleaned_data['usertype']
         email = form.cleaned_data['email']
@@ -62,15 +63,18 @@ def signup(request):
         tarjeta_debito = form.cleaned_data['tarjeta_debito']
         tarjeta_junaeb = form.cleaned_data['tarjeta_junaeb']
 
-        if (usertype == 3):  # es un cliente
+        if (usertype == "3"):  # es un cliente
             user = User(username=username, email=email, password=password)
+            user.is_active = 1
             user.save()
             cliente = Alumno(user=User.objects.get(username=username), tipo='alumno')
             cliente.save()
-
             page = 'app/index.html'
-        elif (usertype == 1):  # es un vendedor fijo
+
+        elif (usertype == "1"): # es un vendedor fijo
+
             user = User(username=username, email=email, password=password)
+            user.is_active = 1
             user.save()
             cliente_vend_fijo = VendedorFijo(user=User.objects.get(username=username), tipo='fijo',
                                              apertura=hora_inicio, cierre=hora_final,
@@ -78,9 +82,11 @@ def signup(request):
                                              tarj_junaeb=tarjeta_junaeb)
             cliente_vend_fijo.save()
             page = 'app/vendedor_profile.html'
-        elif (usertype == 2):  # es un vendedor ambulante
+
+        elif (usertype == "2"): # es un vendedor ambulante
 
             user = User(username=username, email=email, password=password)
+            user.is_active = 1
             user.save()
             cliente_vend_amb = VendedorAmbulante(user=User.objects.get(username=username), tipo='ambulante',
                                                  tarj_cred=tarjeta_credito, tarj_deb=tarjeta_debito,
