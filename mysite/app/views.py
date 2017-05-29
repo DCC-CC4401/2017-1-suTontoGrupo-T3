@@ -20,17 +20,21 @@ def login(request):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
         # veo si estan en la bd
-        user = User.objects.get(username=username)
-        if UserInfo.objects.get(user=user) != None:
-            user.is_active = 1
-            user.save()
-            usuario = UserInfo.objects.get(user=user)
-            if usuario.tipo == 'fijo' or usuario.tipo == "ambulante":
-                return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
-            else: # es alumno
-                return render(request, 'app/vendedor_profileAlumno.html', {'usuario': usuario})
+        try:
+            user = User.objects.get(username=username)
+            if UserInfo.objects.get(user=user) != None:
+
+                user.is_active = 1
+                user.save()
+                usuario = UserInfo.objects.get(user=user)
+                if usuario.tipo == 'fijo' or usuario.tipo == "ambulante":
+                    return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
+                else: # es alumno
+                    return render(request, 'app/vendedor_profileAlumno.html', {'usuario': usuario})
+        except Exception:
+            return render(request, 'app/login2.html', {'form': form})
     else:
-        return render(request, 'app/login.html', {'form': form})
+        return render(request, 'app/login2.html', {'form': form})
 
 
 def gestion_productos(request):
