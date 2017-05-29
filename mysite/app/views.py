@@ -49,6 +49,7 @@ def home(request):
 
 def signup(request):
     form = LoginForm(request.POST)
+    page = "app/signup.html"
     if (request.method == 'POST' and form.is_valid()):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
@@ -66,7 +67,9 @@ def signup(request):
             user.save()
             cliente = Alumno(user=User.objects.get(username=username), tipo='alumno')
             cliente.save()
-        elif (usertype == 1):  # es un vendedor fijo
+
+            page = 'app/index.html'
+        elif (usertype == 1): # es un vendedor fijo
             user = User(username=username, email=email, password=password)
             user.save()
             cliente_vend_fijo = VendedorFijo(user=User.objects.get(username=username), tipo='fijo',
@@ -74,15 +77,18 @@ def signup(request):
                                              tarj_cred=tarjeta_credito, tarj_deb=tarjeta_debito,
                                              tarj_junaeb=tarjeta_junaeb)
             cliente_vend_fijo.save()
-        elif (usertype == 2):  # es un vendedor ambulante
+            page = 'app/vendedor_profile.html'
+        elif (usertype == 2): # es un vendedor ambulante
+
             user = User(username=username, email=email, password=password)
             user.save()
             cliente_vend_amb = VendedorAmbulante(user=User.objects.get(username=username), tipo='ambulante',
                                                  tarj_cred=tarjeta_credito, tarj_deb=tarjeta_debito,
                                                  tarj_junaeb=tarjeta_junaeb)
             cliente_vend_amb.save()
+            page = 'app/vendedor_profile.html'
+    return render(request, page)
 
-    return render(request, 'app/signup.html')
 
 
 # informacion de test

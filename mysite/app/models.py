@@ -23,14 +23,14 @@ class Alumno(UserInfo):
 class Vendedor(UserInfo):
     nombre_visible = models.CharField(max_length=50)
     archivo_foto_perfil = models.ImageField(upload_to='app/static/')
-    efectivo = models.BooleanField()
-    tarj_cred = models.BooleanField()
-    tarj_deb = models.BooleanField()
-    tarj_junaeb = models.BooleanField()
+    efectivo = models.BooleanField(default=False)
+    tarj_cred = models.BooleanField(default=False)
+    tarj_deb = models.BooleanField(default=False)
+    tarj_junaeb = models.BooleanField(default=False)
 
 
 class VendedorAmbulante(Vendedor):
-    check_in = models.BooleanField
+    check_in = models.BooleanField(default=False)
 
 
 
@@ -53,10 +53,7 @@ class Favoritos(models.Model):
 
 class Productos(models.Model):
     nombre = models.CharField(max_length=50)
-    user = models.OneToOneField(Vendedor,
-                                on_delete=models.CASCADE,
-                                primary_key=False,
-                                )
+    user = models.CharField(max_length=100)
     precio = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=100)
     categoria = models.CharField(max_length=50)
