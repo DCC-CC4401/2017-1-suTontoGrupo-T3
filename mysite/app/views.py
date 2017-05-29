@@ -108,7 +108,7 @@ pizza_clasica = {'nombre': 'Pizza Clasica',
                  'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Jamon, Tomate',
                  'categoria': 'Almuerzos',
                  'stock': 20,
-                 'icono': "../../static/img/pizza.png",
+                 'icono': "pizza.png",
                  'imagen': "#modal1"}
 
 pizza_peperoni = {'nombre': 'Pizza Pepperoni',
@@ -117,8 +117,8 @@ pizza_peperoni = {'nombre': 'Pizza Pepperoni',
                   'descripcion': 'Deliciosa pizza con: Queso mozzarella, Pepperoni',
                   'categoria': 'Almuerzos',
                   'stock': 20,
-                  'icono': "../../static/img/pizza.png",
-                  'imagen': "#modal1"}
+                  'icono': "pizza.png",
+                  'imagen': "#modal4"}
 
 pizza_vegetariana = {'nombre': 'Pizza Vegetariana',
                      'user': 'michaeljackson',
@@ -126,8 +126,8 @@ pizza_vegetariana = {'nombre': 'Pizza Vegetariana',
                      'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Champiñones, Tomate',
                      'categoria': 'Almuerzos',
                      'stock': 20,
-                     'icono': "../../static/img/pizza.png",
-                     'imagen': "#modal1"}
+                     'icono': "pizza.png",
+                     'imagen': "#modal5"}
 
 pollo = {'nombre': 'Pollo',
          'user': 'Rata Touille',
@@ -135,7 +135,7 @@ pollo = {'nombre': 'Pollo',
          'descripcion': 'Rico pollo hecho con amor',
          'categoria': 'Almuerzos',
          'stock': 30,
-         'icono': "../../static/img/chicken2.png",
+         'icono': "chicken2.png",
          'imagen': "#modal2"}
 
 menu_arroz = {'nombre': 'Menú de arroz',
@@ -144,7 +144,7 @@ menu_arroz = {'nombre': 'Menú de arroz',
               'descripcion': 'Almuerzo de arroz con pollo arvejado.',
               'categoria': 'Almuerzos',
               'stock': 40,
-              'icono': "../../static/img/rice.png",
+              'icono': "rice.png",
               'imagen': "#modal2"}
 
 jugo = {'nombre': 'Jugo',
@@ -153,7 +153,7 @@ jugo = {'nombre': 'Jugo',
         'descripcion': 'Jugo en caja sabor durazno.',
         'categoria': 'Snack',
         'stock': 40,
-        'icono': "../../static/img/juice.png",
+        'icono': "juice.png",
         'imagen': "#modal3"}
 
 def get_info(producto):
@@ -175,7 +175,7 @@ def get_menus(user):
 
 def vendedor_profile(request):
     usuario = "ratatouille"
-    prod = Productos.objects.get(user=usuario)
+    prod = Productos.objects.filter(user=usuario)
     info_producto = {'menus' : prod}
     return render(request, 'app/vendedor_profile.html', context=info_producto)
 
