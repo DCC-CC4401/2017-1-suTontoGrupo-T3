@@ -146,7 +146,7 @@ def get_menus(user):
 
 def vendedor_profile(request):
     usuario = User.objects.get(is_active=1)
-    user = User.objects.filter(username=usuario.username)
+    user = User.objects.get(username=usuario.username)
     info_producto = {'menus': get_menus(user.username), 'usuario': usuario, 'user': user, }
     return render(request, 'app/vendedor_profile.html', context=info_producto)
 
@@ -157,6 +157,7 @@ def vendedor_profileAlumno1(request):
 
 def vendedor_profileAlumno2(request):
     return vendedor_profileAlumno(request, 'ratatouille')
+
 
 def vendedor_profileAlumno3(request):
     return vendedor_profileAlumno(request, 'pedropiedra')
