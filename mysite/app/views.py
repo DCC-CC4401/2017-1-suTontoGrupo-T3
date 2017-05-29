@@ -143,6 +143,8 @@ def vendedor_profileAlumno(request):
         clase_fijo = VendedorFijo.objects.get(vendedor_ptr_id=clase_user.id)
         tipo = 'Vendedor Fijo'
         horario = str(clase_fijo.apertura) + '-' + str(clase_fijo.cierre)
+        hora_inicio = clase_fijo.apertura
+        hora_fin = clase_fijo.cierre
     else:
         clase_ambulante = VendedorAmbulante.objects.get(vendedor_ptr_id=clase_user.id)
         tipo = 'Vendedor Ambulante'
@@ -165,7 +167,9 @@ def vendedor_profileAlumno(request):
         'formas_de_pago' : formas_de_pago,
         'menus' : get_menus(usuario),
         'imagen' : clase_vendedor.archivo_foto_perfil,
-        'horario' : horario
+        'horario' : horario,
+        'hora_inicio' : hora_inicio,
+        'hora_fin' : hora_fin
     }
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
 
