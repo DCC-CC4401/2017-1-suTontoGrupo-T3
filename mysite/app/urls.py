@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^vendedor_profileAlumno1$', views.vendedor_profileAlumno1, name='vendedor_profileAlumno1'),
     url(r'^vendedor_profileAlumno2$', views.vendedor_profileAlumno2, name='vendedor_profileAlumno2'),
     url(r'^vendedor_edit$', views.vendedor_edit, name='vendedor_edit'),
-    url(r'^editar_producto/$', views.editar_producto, name='editar_producto'),
+    url(r'^editar_producto/(?P<partner_name>[-\w]+)/$', views.editar_producto, name='editar_producto'),
     url(r'^add_item/$', views.add_item, name='add_item'),
 
 ]
