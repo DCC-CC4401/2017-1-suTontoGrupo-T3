@@ -236,10 +236,11 @@ def vendedor_edit(request):
         return render(request, 'app/vendedor_edit.html', {'form': form, 'user': user, 'usuario': usuario})
 
 
-def editar_producto(request):
+def editar_producto(request, name):
     user = User.objects.get(is_active=1)
-    return render(request, 'app/editar_producto.html', {'user' : user})
-
+    productos = Productos.objects.filter(user=user.username)
+    prod = productos.get(nombre=name)
+    return render(request, 'app/editar_producto.html', {'producto': prod, 'user' : user})
 
 def iniciar():
     vendedor_profile()
