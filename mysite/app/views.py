@@ -11,8 +11,14 @@ from django.contrib import auth
 
 
 def index(request):
-    return render(request, 'app/index.html')
+    user = User.objects.filter(is_active=1)
+    return render(request, 'app/index.html', {'user': user})
 
+def logout(request):
+    user = User.objects.get(is_active=1)
+    user.is_active = 0
+    user.save()
+    return index(request)
 
 def login(request):
     form = LoginForm(request.POST)
@@ -36,7 +42,7 @@ def login(request):
                         usuario = VendedorAmbulante.objects.get(user=user)
                         return render(request, 'app/vendedor_profile.html', {'menus': get_menus(user.username), 'usuario': usuario, 'user': user})
                     else:  # es alumno
-                        return render(request, 'app/index.html', {'usuario': usuario})
+                        return render(request, 'app/index.html', {'usuario': usuario, 'user': user})
                 else:
                     return render(request, 'app/login2.html', {'form': form})
         except Exception:
@@ -46,11 +52,13 @@ def login(request):
 
 
 def gestion_productos(request):
-    return render(request, 'app/gestion_productos.html')
+    user = User.objects.filter(is_active=1)
+    return render(request, 'app/gestion_productos.html', {'user': user})
 
 
 def home(request):
-    return render(request, 'app/home.html')
+    user = User.objects.filter(is_active=1)
+    return render(request, 'app/home.html', {'user': user})
 
 
 def signup(request):
@@ -138,7 +146,7 @@ def get_menus(user):
 
 def vendedor_profile(request):
     usuario = User.objects.get(is_active=1)
-    user = User.objects.get(username=usuario.username)
+    user = User.objects.filter(username=usuario.username)
     info_producto = {'menus': get_menus(user.username), 'usuario': usuario, 'user': user, }
     return render(request, 'app/vendedor_profile.html', context=info_producto)
 
@@ -177,6 +185,7 @@ def vendedor_profileAlumno(request, usuario):
     estado = 'No disponible'
     if clase_user.is_active:
         estado = 'Disponible'
+        user = User.objects.filter(is_active=1)
     info_vendedor = {
         'nombre': clase_vendedor.nombre_visible,
         'tipo_vendedor': tipo,
@@ -185,6 +194,7 @@ def vendedor_profileAlumno(request, usuario):
         'menus': get_menus(usuario),
         'imagen': clase_vendedor.archivo_foto_perfil,
         'horario': horario,
+        'user': user,
     }
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
 
@@ -222,7 +232,8 @@ def vendedor_edit(request):
 
 
 def editar_producto(request):
-    return render(request, 'app/editar_producto.html')
+    user = User.objects.get(is_active=1)
+    return render(request, 'app/editar_producto.html', {'user' : user})
 
 
 def iniciar():
@@ -231,16 +242,18 @@ def iniciar():
 
 def add_item(request):
     form = ProductForm(request.POST)
-    username = User.objects.get(is_active=1)
-    user = username.username
-    nombre = form.cleaned_data['item']
-    precio = form.cleaned_data['precio']
-    stock = form.cleaned_data['stock']
-    descripcion = form.cleaned_data['descripcion']
-    categoria = form.cleaned_data['categoria']
-    imagen = form.cleaned_data['imagen']
-    img_ref = form.cleaned_data['img_ref']
-    prod = Productos(user=user, nombre=nombre, precio=precio, stock=stock, imagen=imagen, descripcion=descripcion,
+    if  request.method == 'POST' and form.is_valid():
+        print(1)
+        username = User.objects.get(is_active=1)
+        user = username.username
+        nombre = form.cleaned_data['item']
+        precio = form.cleaned_data['precio']
+        stock = form.cleaned_data['stock']
+        descripcion = form.cleaned_data['descripcion']
+        categoria = form.cleaned_data['categoria']
+        imagen = form.cleaned_data['imagen']
+        img_ref = form.cleaned_data['img_ref']
+        prod = Productos(user=user, nombre=nombre, precio=precio, stock=stock, imagen=imagen, descripcion=descripcion,
                      categoria=categoria, img_referencia=img_ref)
-    prod.save()
-    vendedor_profile()
+        prod.save()
+    return vendedor_profile(request)

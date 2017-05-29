@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     # app/login/
     url(r'^login/$', views.login, name='login'),
+    url(r'^logout/$', views.logout, name='logout'),
     url(r'^gestion_productos/$', views.gestion_productos, name='gestion_productos'),
     url(r'^home/$', views.home, name='home'),
     url(r'^signup/$', views.signup, name='signup'),
