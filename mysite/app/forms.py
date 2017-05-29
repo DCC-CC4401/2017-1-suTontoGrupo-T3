@@ -15,7 +15,6 @@ class SignupForm(forms.Form):
     email = forms.CharField(label='email', max_length=100)
     hora_inicial  = forms.TimeField()
     hora_final = forms.TimeField()
-    #efectivo  = forms.BooleanField(label='efectivo')
     efectivo = forms.Field(label="efectivo")
     tarjeta_credito = forms.Field(label="tarjeta_credito")
     tarjeta_debito = forms.Field(label="tarjeta_debito")

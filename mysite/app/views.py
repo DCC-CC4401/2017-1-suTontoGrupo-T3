@@ -137,7 +137,7 @@ def get_menus(user):
 def vendedor_profile(request):
     usuario = UserInfo.objects.get(is_active=1)
     user = User.objects.get(username=usuario.user)
-    info_producto = {'menus' : get_menus(usuario.username),'usuario':usuario,'user':user}
+    info_producto = {'menus' : get_menus(user.username),'usuario':usuario,'user':user}
     return render(request, 'app/vendedor_profile.html', context=info_producto)
 
 
@@ -150,6 +150,8 @@ def vendedor_profileAlumno(request):
         clase_fijo = VendedorFijo.objects.get(vendedor_ptr_id=clase_user.id)
         tipo = 'Vendedor Fijo'
         horario = str(clase_fijo.apertura) + '-' + str(clase_fijo.cierre)
+        hora_inicio = clase_fijo.apertura
+        hora_fin = clase_fijo.cierre
     else:
         clase_ambulante = VendedorAmbulante.objects.get(vendedor_ptr_id=clase_user.id)
         tipo = 'Vendedor Ambulante'
@@ -172,7 +174,9 @@ def vendedor_profileAlumno(request):
         'formas_de_pago' : formas_de_pago,
         'menus' : get_menus(usuario),
         'imagen' : clase_vendedor.archivo_foto_perfil,
-        'horario' : horario
+        'horario' : horario,
+        'hora_inicio' : hora_inicio,
+        'hora_fin' : hora_fin
     }
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
 
