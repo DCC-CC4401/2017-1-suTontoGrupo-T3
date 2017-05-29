@@ -35,8 +35,8 @@ class VendedorAmbulante(Vendedor):
 
 
 class VendedorFijo(Vendedor):
-    apertura = models.TimeField
-    cierre = models.TimeField
+    apertura = models.TimeField()
+    cierre = models.TimeField()
 
 
 

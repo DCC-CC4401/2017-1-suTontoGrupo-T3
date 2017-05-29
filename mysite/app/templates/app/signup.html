@@ -26,10 +26,10 @@ $(function() {
         if($(this).val() == "3") { // si es cliente
             $('#horarios').hide();
             $('#formas_de_pago').hide();
-        } else if($(this).val == "2") { // si es vendedor ambulante
+        } else if($(this).val() == "2") { // si es vendedor ambulante
             $('#horarios').hide();
             $('#formas_de_pago').show();
-        } else if($(this).val == "3") { // si es vendedor fijo
+        } else if($(this).val() == "1") { // si es vendedor fijo
             $('#horarios').show();
             $('#formas_de_pago').show();
         }
@@ -56,25 +56,25 @@ $(function() {
             </div>
 
               <div class="input-field col s12 m12">
-                <select id="usertype" required>
+                <select name="usertype" id="usertype" required="False">
                   <option value="" disabled selected>Elige una opción</option>
-                  <option value="1">Vendedor fijo</option>
-                  <option value="2">Vendedor móvil</option>
-                  <option value="3">Cliente</option>
+                  <option value='1'>Vendedor fijo</option>
+                  <option value='2'>Vendedor móvil</option>
+                  <option value='3'>Cliente</option>
                 </select>
                 <label>Tipo de Usuario</label>
               </div>
 
             <div class='row'>
               <div class='input-field col s12 m12'>
-                <input class='validate' type='text' name='nombre' id='nombre' required/>
-                <label style="text-align: center" for='nombre'>Ingresa tu nombre</label>
+                <input class='validate' type='text' name='username' id='username' required="False"/>
+                <label style="text-align: center" for='username'>Ingresa tu nombre</label>
               </div>
             </div>
 
             <div class='row'>
               <div class='input-field col s12 m12'>
-                <input class='validate' type='email' name='email' id='email' required/>
+                <input class='validate' type='email' name='email' id='email' required="False"/>
                 <label style="text-align: center" for='email'>Ingresa tu e-mail</label>
               </div>
             </div>
@@ -83,12 +83,12 @@ $(function() {
                   <div class="row">
                     <div class="input-field col s6">
                       <i class="material-icons prefix">alarm</i>
-                      <input id="hora_inicial" value="00:00" type="time" class="validate">
+                      <input name="hora_inicial" id="hora_inicial" value="00:00" type="time" class="validate" required="False">
                       <label for="hora_inicial" style="text-align: center;">Hora inicial</label>
                     </div>
                     <div class="input-field col s6">
                       <i class="material-icons prefix">alarm</i>
-                      <input id="hora_final" value="00:00" type="time" class="validate">
+                      <input name="hora_final" id="hora_final" value="00:00" type="time" class="validate" required="False">
                       <label for="hora_final" style="text-align: center;">Hora final</label>
                     </div>
                   </div>
@@ -99,20 +99,20 @@ $(function() {
               <div class='input-field col s12 m12' id="formas_de_pago">
                 Seleccione sus formas de pago:
                   <p>
-                      <input type="checkbox" class="filled-in" id="efectivo" checked="checked" />
-                      <label for="filled-in-box">Efectivo</label>
+                      <input type="checkbox" class="filled-in" id="efectivo" name="efectivo" checked="checked" required="False"/>
+                      <label for="efectivo">Efectivo</label>
                   </p>
                   <p>
-                      <input type="checkbox" class="filled-in" id="tarjeta_credito" checked="checked" />
-                      <label for="filled-in-box2">Tarjeta de Crédito</label>
+                      <input type="checkbox" class="filled-in" id="tarjeta_credito" name="tarjeta_credito" checked="checked" required="False"/>
+                      <label for="tarjeta_credito">Tarjeta de Crédito</label>
                   </p>
                   <p>
-                      <input type="checkbox" class="filled-in" id="tarjeta_debito" checked="checked" />
-                      <label for="filled-in-box3">Tarjeta de Débito</label>
+                      <input type="checkbox" class="filled-in" id="tarjeta_debito" name="tarjeta_debito" checked="checked" required="False"/>
+                      <label for="tarjeta_debito">Tarjeta de Débito</label>
                   </p>
                   <p>
-                      <input type="checkbox" class="filled-in" id="tarjeta_junaeb" checked="checked" />
-                      <label for="filled-in-box4">Tarjeta Junaeb</label>
+                      <input type="checkbox" class="filled-in" id="tarjeta_junaeb" name="tarjeta_junaeb" checked="checked" required="False"/>
+                      <label for="tarjeta_junaeb">Tarjeta Junaeb</label>
                   </p>
               </div>
             </div>
@@ -136,14 +136,14 @@ $(function() {
 
             <div class='row'>
               <div class='input-field col s12 m12'>
-                <input class='validate' type='password' name='password' id='password' required/>
+                <input class='validate' type='password' name='password' id='password' required="False"/>
                 <label style="text-align: center" for='password'>Ingresa tu contraseña</label>
               </div>
             </div>
 
             <div class='row'>
               <div class='input-field col s12 m12'>
-                <input class='validate' type='password' name='password2' id='password2' required/>
+                <input class='validate' type='password' name='password2' id='password2' required="False"/>
                 <label style="text-align: center" for='password2'>Repite tu contraseña</label>
               </div><br>
                 <div class="registrationFormAlert" id="divCheckPasswordMatch" style="text-align: center"></div>
