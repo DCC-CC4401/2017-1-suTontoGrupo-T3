@@ -35,10 +35,17 @@
                     <div class="row">
                         <div class="col s3 offset-s2 hide-on-med-and-down">
                             <!--Debe recibir el nombre desde el controlador-->
-                            <h4 class="card-title grey-text flow-text text-darken-4">Yolanda Martinez</h4>
+                            <h4 class="card-title grey-text flow-text text-darken-4">{{ usuario.first_name }}</h4>
                             <!--Debe recibir el tipo de vendedor desde el controlador-->
-                            <p class="medium-small flow-text grey-text">&emsp;&emsp;&ensp;Vendedor Fijo</p>
-                            <!--if(tipo==fijo){-->
+                            <p class="medium-small flow-text grey-text">&emsp;&emsp;{{ usuario.tipo }}</p>
+                            {% if usuario.tipo == "fijo" %}
+                                <p class="flow-text text-darken-4" style="font-size: 0.88rem;">
+                                    &emsp;&emsp;Horario: <a class="light-green-text">12:30-14:15</a>
+                                </p>
+                            {% endif %}
+
+
+
                             <!--p class="flow-text text-darken-4" style="font-size: 0.88rem;">
                                 &emsp;&emsp;Horario: <a class="light-green-text">12:30-14:15</a>
                             </p--><!--}-->
@@ -46,8 +53,9 @@
 
                         <div class="col s3 l2 hide-on-med-and-down center-align">
                             <h4 class="card-title flow-text text-darken-4">Estado</h4>
-                            <!--if(tipo==fijo && horario entre sus horarios || tipo==ambulante && estado==activo)-->
-                            <p class="medium-small flow-text light-green-text">Disponible</p>
+                            {% if tipo == "ambulante" and check_in == 1 %}
+                                <p class="medium-small flow-text light-green-text">Disponible</p>
+                            {% endif %}
                             <!--else { lo mismo de arriba pero No disponible-->
                         </div>
 

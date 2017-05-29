@@ -181,8 +181,8 @@ def get_menus(user):
 
 
 def vendedor_profile(request):
-    usuario = "ratatouille"
-    info_producto = {'menus' : get_menus(usuario)}
+    usuario = UserInfo.objects.get(is_active=1)
+    info_producto = {'menus' : get_menus(usuario.username),'usuario':usuario}
     return render(request, 'app/vendedor_profile.html', context=info_producto)
 
 
@@ -224,7 +224,7 @@ def vendedor_profileAlumno(request):
 def vendedor_edit(request):
 
     # formulario lleno, edicion de datos
-    usuario = User.objects.get(is_active=1)
+    usuario = UserInfo.objects.get(is_active=1)
 
     if request.method == 'POST':
         form = EditVForm(request.POST)
