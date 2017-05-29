@@ -97,6 +97,7 @@ def signup(request):
             cliente.save()
             page = 'app/vendedor_profile.html'
             return render(request,'app/vendedor_profile.html')
+    form = SignupForm()
     return render(request,'app/signup.html',{'form':form})
 
 
@@ -213,22 +214,25 @@ def vendedor_profileAlumno(request):
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
 
 def vendedor_edit(request):
-    form = EditVForm(request.POST)
+
     # formulario lleno, edicion de datos
     usuario = User.objects.get(is_active=1)
-    if request.method == 'POST' and form.is_valid():
+
+    if request.method == 'POST':
+        form = EditVForm(request.POST)
         # obtengo mail y pass
-        nombre = form.cleaned_data['your_name']
-        foto = form.cleaned_data['file']
-        # si alguno es != de None lo actualizo
-        if nombre != None:
-            usuario.first_name = nombre
-            usuario.save()
-        if foto != None:
-            usuario = Vendedor.objects.get(user=usuario)
-            usuario.archivo_foto_perfil = foto
-            usuario.save()
-        return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
+
+        if form.is_valid():
+            nombre = form.cleaned_data['name']
+
+            if nombre != None:
+                usuario.first_name = nombre
+                usuario.save()
+
+            return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
+        else :
+            form = EditVForm()
+            return render(request, 'app/vendedor_edit.html', {'form': form, 'usuario': usuario})
     else:
         form = EditVForm()
         return render(request, 'app/vendedor_edit.html', {'form': form, 'usuario': usuario})
