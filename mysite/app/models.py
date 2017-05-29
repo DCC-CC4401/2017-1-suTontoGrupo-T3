@@ -15,14 +15,12 @@ class UserInfo(models.Model):
                                 on_delete=models.CASCADE,
                                 primary_key=True,
                                 )
-    tipo = models.CharField(max_length=50)
+    tipo = models.CharField(max_length=10)
 
+class Alumno(UserInfo):
+    pass
 
-class Vendedor(models.Model):
-    user = models.OneToOneField(UserInfo,
-                                on_delete=models.CASCADE,
-                                primary_key=True,
-                                )
+class Vendedor(UserInfo):
     nombreFotoPerfil = models.CharField(max_length=50)
     archivoFotoPerfil = models.ImageField(upload_to='app/static/')
 
@@ -37,8 +35,9 @@ class VendedorFijo(Vendedor):
     cierre = models.TimeField
 
 
+
 class Favoritos(models.Model):
-    alumno = models.OneToOneField(UserInfo,
+    alumno = models.OneToOneField(Alumno,
                                   on_delete=models.CASCADE,
                                   primary_key=False,
                                   )
