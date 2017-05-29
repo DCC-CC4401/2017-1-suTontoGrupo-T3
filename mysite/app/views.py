@@ -49,54 +49,62 @@ def home(request):
 
 
 def signup(request):
-    form = SignupForm(request.POST)
+
     page = "app/signup.html"
     clienteNul=User(username="nulo")
     cliente = UserInfo(user=clienteNul)
     #recibe el form
-    if (request.method == 'POST' and form.is_valid()):
-        username = form.cleaned_data['nombre']
-        password = form.cleaned_data['password']
-        usertype = form.cleaned_data['usertype']
-        email = form.cleaned_data['email']
-        hora_inicio = form.cleaned_data['hora_inicio']
-        hora_final = form.cleaned_data['hora_final']
-        efectivo = form.cleaned_data['efectivo']
-        tarjeta_credito = form.cleaned_data['tarjeta_credito']
-        tarjeta_debito = form.cleaned_data['tarjeta_debito']
-        tarjeta_junaeb = form.cleaned_data['tarjeta_junaeb']
+    if (request.method == 'POST'):
+        print("1")
+        form = SignupForm(request.POST)
+        print(request.POST)
+        print(form.errors)
+        if(form.is_valid()):
 
-        if (usertype == "3"):  # es un cliente
-            user = User(username=username, email=email, password=password)
-            user.is_active = 1
-            user.save()
-            cliente = Alumno(user=User.objects.get(username=username), tipo='alumno')
-            cliente.save()
-            page = 'app/index.html'
-            return render(request, 'app/index.html')
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            usertype = form.cleaned_data['usertype']
+            email = form.cleaned_data['email']
+            hora_inicial = form.cleaned_data['hora_inicial']
+            hora_final = form.cleaned_data['hora_final']
+            efectivo = form.cleaned_data['efectivo']
+            tarjeta_credito = form.cleaned_data['tarjeta_credito']
+            tarjeta_debito = form.cleaned_data['tarjeta_debito']
+            tarjeta_junaeb = form.cleaned_data['tarjeta_junaeb']
+            if (int(usertype[0]) == 3):  # es un cliente
+                print("entre!!")
+                user = User(username=username, email=email, password=password)
+                user.is_active = 1
+                user.save()
+                cliente = Alumno(user=User.objects.get(username=username), tipo='alumno')
+                cliente.save()
+                page = 'app/index.html'
+                return render(request, 'app/index.html')
 
-        elif (usertype == "1"): # es un vendedor fijo
+            elif (int(usertype[0]) == 1): # es un vendedor fijo
 
-            user = User(username=username, email=email, password=password)
-            user.is_active = 1
-            user.save()
-            cliente = VendedorFijo(user=User.objects.get(username=username), tipo='fijo',
-                                             apertura=hora_inicio, cierre=hora_final,
-                                             tarj_cred=tarjeta_credito, tarj_deb=tarjeta_debito,
-                                             tarj_junaeb=tarjeta_junaeb)
-            cliente.save()
-            return render(request,'app/vendedor_profile.html')
-        elif (usertype == "2"): # es un vendedor ambulante
+                user = User(username=username, email=email, password=password)
+                user.is_active = 1
+                user.save()
+                cliente = VendedorFijo(user=User.objects.get(username=username), tipo='fijo',
+                                                 apertura=hora_inicial, cierre=hora_final,
+                                                 tarj_cred=(True if (tarjeta_credito == 'on') else False),
+                                                 tarj_deb=(True if (tarjeta_debito == 'on') else False),
+                                                 tarj_junaeb=(True if (tarjeta_junaeb == 'on') else False))
+                cliente.save()
+                return render(request,'app/vendedor_profile.html')
+            elif (int(usertype[0]) == 2): # es un vendedor ambulante
 
-            user = User(username=username, email=email, password=password)
-            user.is_active = 1
-            user.save()
-            cliente = VendedorAmbulante(user=User.objects.get(username=username), tipo='ambulante',
-                                                 tarj_cred=tarjeta_credito, tarj_deb=tarjeta_debito,
-                                                 tarj_junaeb=tarjeta_junaeb)
-            cliente.save()
-            page = 'app/vendedor_profile.html'
-            return render(request,'app/vendedor_profile.html')
+                user = User(username=username, email=email, password=password)
+                user.is_active = 1
+                user.save()
+                cliente = VendedorAmbulante(user=User.objects.get(username=username), tipo='ambulante',
+                                            tarj_cred=(True if (tarjeta_credito == 'on') else False),
+                                            tarj_deb=(True if (tarjeta_debito == 'on') else False),
+                                            tarj_junaeb=(True if (tarjeta_junaeb == 'on') else False))
+                cliente.save()
+                page = 'app/vendedor_profile.html'
+                return render(request,'app/vendedor_profile.html')
     form = SignupForm()
     return render(request,'app/signup.html',{'form':form})
 
