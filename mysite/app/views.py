@@ -133,7 +133,8 @@ def get_menus(user):
 def vendedor_profile(request):
     usuario = UserInfo.objects.get(is_active=1)
     user = User.objects.get(username=usuario.user)
-    info_producto = {'menus' : get_menus(usuario.username),'usuario':usuario,'user':user}
+    name = user.username
+    info_producto = {'menus' : get_menus('ratatouille'),'usuario':usuario,'user':user}
     return render(request, 'app/vendedor_profile.html', context=info_producto)
 
 
