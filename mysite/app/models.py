@@ -21,7 +21,7 @@ class Alumno(UserInfo):
     pass
 
 class Vendedor(UserInfo):
-    nombre_foto_perfil = models.CharField(max_length=50)
+    nombre_visible = models.CharField(max_length=50)
     archivo_foto_perfil = models.ImageField(upload_to='app/static/')
 
 
