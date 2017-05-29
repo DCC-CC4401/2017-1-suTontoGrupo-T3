@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^vendedor_profileAlumno3$', views.vendedor_profileAlumno3, name='vendedor_profileAlumno3'),
     url(r'^vendedor_profileAlumno4$', views.vendedor_profileAlumno4, name='vendedor_profileAlumno4'),
     url(r'^vendedor_edit$', views.vendedor_edit, name='vendedor_edit'),
-    url(r'^editar_producto/(?P<name>[-\w]+)/$', views.editar_producto, name='editar_producto'),
+    url(r'^editar_producto/$', views.editar_producto, name='editar_producto'),
     url(r'^add_item/$', views.add_item, name='add_item'),
 
 ]
