@@ -99,63 +99,6 @@ def signup(request):
             return render(request,'app/vendedor_profile.html')
     return render(request,'app/signup.html',{'form':form})
 
-
-
-# informacion de test
-pizza_clasica = {'nombre': 'Pizza Clasica',
-                 'user': 'Rata Touille',
-                 'precio': '$1.300',
-                 'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Jamon, Tomate',
-                 'categoria': 'Almuerzos',
-                 'stock': 20,
-                 'icono': "../../static/img/pizza.png",
-                 'imagen': "#modal1"}
-
-pizza_peperoni = {'nombre': 'Pizza Pepperoni',
-                  'user': 'michaeljackson',
-                  'precio': '$1.300',
-                  'descripcion': 'Deliciosa pizza con: Queso mozzarella, Pepperoni',
-                  'categoria': 'Almuerzos',
-                  'stock': 20,
-                  'icono': "../../static/img/pizza.png",
-                  'imagen': "#modal1"}
-
-pizza_vegetariana = {'nombre': 'Pizza Vegetariana',
-                     'user': 'michaeljackson',
-                     'precio': '$1.300',
-                     'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Champiñones, Tomate',
-                     'categoria': 'Almuerzos',
-                     'stock': 20,
-                     'icono': "../../static/img/pizza.png",
-                     'imagen': "#modal1"}
-
-pollo = {'nombre': 'Pollo',
-         'user': 'Rata Touille',
-         'precio': '$1.700',
-         'descripcion': 'Rico pollo hecho con amor',
-         'categoria': 'Almuerzos',
-         'stock': 30,
-         'icono': "../../static/img/chicken2.png",
-         'imagen': "#modal2"}
-
-menu_arroz = {'nombre': 'Menú de arroz',
-              'user': 'Rata Touille',
-              'precio': '$2.500',
-              'descripcion': 'Almuerzo de arroz con pollo arvejado.',
-              'categoria': 'Almuerzos',
-              'stock': 40,
-              'icono': "../../static/img/rice.png",
-              'imagen': "#modal2"}
-
-jugo = {'nombre': 'Jugo',
-        'user': 'Rata Touille',
-        'precio': '$300',
-        'descripcion': 'Jugo en caja sabor durazno.',
-        'categoria': 'Snack',
-        'stock': 40,
-        'icono': "../../static/img/juice.png",
-        'imagen': "#modal3"}
-
 def get_info(producto):
     info = {
         'nombre' : producto.nombre,
@@ -181,13 +124,17 @@ def vendedor_profile(request):
 
 
 def vendedor_profileAlumno(request):
-    usuario = 'ratatouille'
+    usuario = 'michaeljackson'
     clase_user = User.objects.get(username=usuario)
     clase_info = UserInfo.objects.get(user_id=clase_user.id)
     clase_vendedor = Vendedor.objects.get(userinfo_ptr_id=clase_user.id)
-    tipo = 'Vendedor Ambulante'
     if 'fijo' in  clase_info.tipo:
+        clase_fijo = VendedorFijo.objects.get(vendedor_ptr_id=clase_user.id)
         tipo = 'Vendedor Fijo'
+        horario = str(clase_fijo.apertura) + '-' + str(clase_fijo.cierre)
+    else:
+        clase_ambulante = VendedorAmbulante.objects.get(vendedor_ptr_id=clase_user.id)
+        tipo = 'Vendedor Ambulante'
     formas_de_pago = []
     if clase_vendedor.efectivo == 1:
         formas_de_pago.append('Efectivo')
@@ -206,7 +153,8 @@ def vendedor_profileAlumno(request):
         'estado' : estado,
         'formas_de_pago' : formas_de_pago,
         'menus' : get_menus(usuario),
-        'imagen' : clase_vendedor.archivo_foto_perfil
+        'imagen' : clase_vendedor.archivo_foto_perfil,
+        'horario' : horario
     }
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
 

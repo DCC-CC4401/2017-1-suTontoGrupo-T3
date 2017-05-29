@@ -38,6 +38,9 @@
                             <h4 class="card-title grey-text flow-text text-darken-4">{{nombre}}</h4>
                             <!--Debe recibir el tipo de vendedor desde el controlador-->
                             <p class="medium-small flow-text grey-text">&emsp;&emsp;&ensp;{{tipo_vendedor}}</p>
+                            {% if tipo_vendedor == 'Vendedor Fijo'%}
+                            <p class="medium-small flow-text grey-text">&emsp;&emsp;&ensp;Horario de Atencion: {{horario}}</p>
+                            {% endif %}
                             <!--if(tipo==fijo){-->
                             <!--p class="flow-text text-darken-4" style="font-size: 0.88rem;">
                                 &emsp;&emsp;Horario: <a class="light-green-text">12:30-14:15</a>
