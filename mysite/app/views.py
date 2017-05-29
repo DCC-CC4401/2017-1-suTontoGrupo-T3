@@ -69,7 +69,7 @@ def signup(request):
             cliente.save()
 
             page = 'app/index.html'
-        elif (usertype == 1): # es un vendedor fijo
+        elif (usertype == 1):  # es un vendedor fijo
             user = User(username=username, email=email, password=password)
             user.save()
             cliente_vend_fijo = VendedorFijo(user=User.objects.get(username=username), tipo='fijo',
@@ -78,7 +78,7 @@ def signup(request):
                                              tarj_junaeb=tarjeta_junaeb)
             cliente_vend_fijo.save()
             page = 'app/vendedor_profile.html'
-        elif (usertype == 2): # es un vendedor ambulante
+        elif (usertype == 2):  # es un vendedor ambulante
 
             user = User(username=username, email=email, password=password)
             user.save()
@@ -88,7 +88,6 @@ def signup(request):
             cliente_vend_amb.save()
             page = 'app/vendedor_profile.html'
     return render(request, page)
-
 
 
 # informacion de test
@@ -189,18 +188,18 @@ def vendedor_edit(request):
         nombre = form.cleaned_data['your_name']
         foto = form.cleaned_data['file']
         # si alguno es != de None lo actualizo
-        if (nombre != None):
+        if nombre != None:
             usuario.first_name = nombre
             usuario.save()
-        if (foto != None):
-            usuario = Vendedor.objects.get(user=usuario.username)
+        if foto != None:
+            usuario = Vendedor.objects.get(user=usuario)
             usuario.archivo_foto_perfil = foto
             usuario.save()
         return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
     else:
         form = EditVForm()
-        return render(request, 'app/vendedor_edit.html', {'form': form,'usuario':usuario})
-    return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
+        return render(request, 'app/vendedor_edit.html', {'form': form, 'usuario': usuario})
+
 
 
 def editar_producto(request):
