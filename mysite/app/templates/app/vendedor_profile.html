@@ -144,180 +144,45 @@
                         <div class="container">
                             <div class="section">
                                 <div class="row">
-
-                                    <div class="col s6 m6 l4">
-                                        <div class="container">
-                                            <div class="card z-depth-1">
-                                                <div class="teal lighten-2 card-image waves-effect waves-block waves-light">
-                                                    <img class="activator responsive-img center-block"
-                                                         style="max-width: 30%; margin-top:20px; margin-bottom:20px;"
-                                                         src="../static/img/pizza.png">
-                                                </div>
-                                                <div class="card-content">
-                                                    <span class="card-title activator grey-text text-darken-4">Pizza<i
-                                                            class="material-icons right">more_vert</i></span>
-                                                    <p><a class="teal-text">$1.300</a></p>
-                                                    <p align="right"><a
-                                                            class="btn-floating activator waves-effect waves-light darken-2"
-                                                            href="{% url 'editar_producto' %}">
-                                                        <i class="material-icons">mode_edit</i>
-                                                    </a></p>
-                                                    <div id="modal1" class="modal">
-                                                        <div class="modal-content">
-                                                            <img class="activator responsive-img center-block"
-                                                                 src="../static/img/pepperoni1.jpg">
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <a href="#!"
-                                                               class="modal-action modal-close waves-effect waves-green btn-flat"><i
-                                                                    class="large material-icons">close</i></a>
-                                                        </div>
+                                    {% for food in menus %}
+                                        <div class="col s6 m6 l4">
+                                            <div class="container">
+                                                <div class="card z-depth-1">
+                                                    <div class="teal lighten-2 card-image waves-effect waves-block waves-light">
+                                                        <img class="activator responsive-img center-block"
+                                                             style="max-width: 30%; margin-top:20px; margin-bottom:20px;"
+                                                             src={{ food.icono }}>
                                                     </div>
-                                                    <div id="modal4" class="modal">
-                                                        <div class="modal-content">
-                                                            <img class="activator responsive-img center-block"
-                                                                 src="../static/img/clasica.jpg">
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <a href="#!"
-                                                               class="modal-action modal-close waves-effect waves-green btn-flat"><i
-                                                                    class="large material-icons">close</i></a>
-                                                        </div>
+                                                    <div class="card-content">
+                                                        <span class="card-title activator grey-text text-darken-4">{{ food.nombre }}<i
+                                                                class="material-icons right">more_vert</i></span>
+                                                        <p><a class="teal-text">{{ food.precio }}</a></p>
+                                                        <p align="right"><a
+                                                                class="btn-floating activator waves-effect waves-light darken-2"
+                                                                href="{% url 'editar_producto' %}">
+                                                            <i class="material-icons">mode_edit</i>
+                                                        </a></p>
                                                     </div>
-                                                    <div id="modal5" class="modal">
-                                                        <div class="modal-content">
-                                                            <img class="activator responsive-img center-block"
-                                                                 src="../static/img/vegetariana.jpg">
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <a href="#!"
-                                                               class="modal-action modal-close waves-effect waves-green btn-flat"><i
-                                                                    class="large material-icons">close</i></a>
-                                                        </div>
+                                                    <div class="card-reveal">
+                                                        <span class="card-title grey-text text-darken-4">{{ food.nombre }}<i
+                                                                class="material-icons right">close</i></span>
+                                                        <ul>
+                                                            <li>Precio: <a
+                                                                    class="green-text light-green-text">{{ food.precio }}</a>
+                                                            </li>
+                                                            <li>Categoria: {{ food.categoria }}</li>
+                                                            <li>Stock: {{ food.stock }}</li>
+                                                            <li>Descripción: {{ food.descripcion }}
+                                                                <p class="right-align"><a
+                                                                        class="waves-effect waves-light"
+                                                                        href={{ food.imagen }}>Ver imagen</a></p>
+                                                            </li>
+                                                        </ul>
                                                     </div>
-                                                    <div id="modal2" class="modal">
-                                                        <div class="modal-content">
-                                                            <img class="activator responsive-img center-block"
-                                                                 src="../static/img/pollo1.jpg">
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <a href="#!"
-                                                               class="modal-action modal-close waves-effect waves-green btn-flat"><i
-                                                                    class="large material-icons">close</i></a>
-                                                        </div>
-                                                    </div>
-                                                    <div id="modal3" class="modal">
-                                                        <div class="modal-content">
-                                                            <img class="activator responsive-img center-block"
-                                                                 src="../static/img/jugo1.jpg">
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <a href="#!"
-                                                               class="modal-action modal-close waves-effect waves-green btn-flat"><i
-                                                                    class="large material-icons">close</i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-reveal">
-                                                    <span class="card-title grey-text text-darken-4">Pizza<i
-                                                            class="material-icons right">close</i></span>
-                                                    <ul>
-                                                        <li>Precio: <a class="green-text light-green-text">$1.300</a>
-                                                        </li>
-                                                        <li>Categoria: Almuerzos</li>
-                                                        <li>Stock: 20</li>
-                                                        <!--<small class="btn-floating btn-small waves-effect waves-light red accent-2"><i class="material-icons tiny">add</i></small>-->
-                                                        <br>
-                                                        <li>Descripción: Deliciosa pizza hecha con masa casera, viene
-                                                            disponible en 3 tipos:
-                                                            <p>-Peperoni: Queso mozzarella, Pepperoni</p>
-                                                            <p class="right-align"><a class="waves-effect waves-light"
-                                                                                      href="#modal1">Ver imagen</a></p>
-                                                            <p>-Clásica: Queso mozzarella, Aceitunas, Jamon, Tomate</p>
-                                                            <p class="right-align"><a class="waves-effect waves-light"
-                                                                                      href="#modal4">Ver imagen</a></p>
-                                                            <p>-Vegetariana: Queso mozzarella, Aceitunas, Champiñones,
-                                                                Tomate</p>
-                                                            <p class="right-align"><a class="waves-effect waves-light"
-                                                                                      href="#modal5">Ver imagen</a></p>
-                                                        </li>
-
-                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="col s6 m6 l4">
-                                        <div class="container">
-                                            <div class="card z-depth-1">
-                                                <div class="teal lighten-2 card-image waves-effect waves-block waves-light">
-                                                    <img class="activator responsive-img center-block"
-                                                         style="max-width: 30%; margin-top:20px; margin-bottom:20px;"
-                                                         src="../static/img/rice.png">
-                                                </div>
-                                                <div class="card-content">
-                                                    <span class="card-title activator grey-text text-darken-4">Menú de arroz<i
-                                                            class="material-icons right">more_vert</i></span>
-                                                    <p><a class="teal-text">$2.500</a></p>
-                                                    <p align="right"><a
-                                                            class="btn-floating activator waves-effect waves-light darken-2"
-                                                            href="{% url 'editar_producto' %}">{{ value }}
-                                                        <i class="material-icons">mode_edit</i>
-                                                    </a></p>
-                                                </div>
-                                                <div class="card-reveal">
-                                                    <span class="card-title grey-text text-darken-4">Menú de arroz<i
-                                                            class="material-icons right">close</i></span>
-                                                    <ul>
-                                                        <li>Precio: <a class="green-text light-green-text">$2.500</a>
-                                                        </li>
-                                                        <li>Categoria: Almuerzos</li>
-                                                        <li>Stock: 40</li>
-                                                        <li>Descripción: Almuerzo de arroz con pollo arvejado.
-                                                            <p class="right-align"><a class="waves-effect waves-light"
-                                                                                      href="#modal2">Ver imagen</a></p>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col s6 m6 l4">
-                                        <div class="container">
-                                            <div class="card z-depth-1">
-                                                <div class="teal lighten-2 card-image waves-effect waves-block waves-light">
-                                                    <img class="activator responsive-img center-block"
-                                                         style="max-width: 30%; margin-top:20px; margin-bottom:20px;"
-                                                         src="../static/img/juice.png">
-                                                </div>
-                                                <div class="card-content">
-                                                    <span class="card-title activator grey-text text-darken-4">Jugo<i
-                                                            class="material-icons right">more_vert</i></span>
-                                                    <p><a class="teal-text">$300</a></p>
-                                                    <p align="right"><a
-                                                            class="btn-floating activator waves-effect waves-light darken-2"
-                                                            href="{% url 'editar_producto' %}">
-                                                        <i class="material-icons">mode_edit</i>
-                                                    </a></p>
-                                                </div>
-                                                <div class="card-reveal">
-                                                    <span class="card-title grey-text text-darken-4">Jugo<i
-                                                            class="material-icons right">close</i></span>
-                                                    <ul>
-                                                        <li>Precio: <a class="green-text light-green-text">$300</a></li>
-                                                        <li>Categoria: Snack</li>
-                                                        <li>Stock: 40</li>
-                                                        <li>Descripción: Jugo en caja sabor durazno.
-                                                            <p class="right-align"><a class="waves-effect waves-light"
-                                                                                      href="#modal3">Ver imagen</a></p>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {% endfor %}
 
                                 </div>
                             </div>

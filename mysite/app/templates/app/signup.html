@@ -26,7 +26,10 @@ $(function() {
         if($(this).val() == "3") { // si es cliente
             $('#horarios').hide();
             $('#formas_de_pago').hide();
-        } else {
+        } else if($(this).val == "2") { // si es vendedor ambulante
+            $('#horarios').hide();
+            $('#formas_de_pago').show();
+        } else if($(this).val == "3") { // si es vendedor fijo
             $('#horarios').show();
             $('#formas_de_pago').show();
         }

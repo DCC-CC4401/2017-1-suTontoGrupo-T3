@@ -109,7 +109,7 @@ pizza_clasica = {'nombre': 'Pizza Clasica',
                  'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Jamon, Tomate',
                  'categoria': 'Almuerzos',
                  'stock': 20,
-                 'icono': "../../static/img/pizza.png",
+                 'icono': "pizza.png",
                  'imagen': "#modal1"}
 
 pizza_peperoni = {'nombre': 'Pizza Pepperoni',
@@ -118,8 +118,8 @@ pizza_peperoni = {'nombre': 'Pizza Pepperoni',
                   'descripcion': 'Deliciosa pizza con: Queso mozzarella, Pepperoni',
                   'categoria': 'Almuerzos',
                   'stock': 20,
-                  'icono': "../../static/img/pizza.png",
-                  'imagen': "#modal1"}
+                  'icono': "pizza.png",
+                  'imagen': "#modal4"}
 
 pizza_vegetariana = {'nombre': 'Pizza Vegetariana',
                      'user': 'michaeljackson',
@@ -127,8 +127,8 @@ pizza_vegetariana = {'nombre': 'Pizza Vegetariana',
                      'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Champiñones, Tomate',
                      'categoria': 'Almuerzos',
                      'stock': 20,
-                     'icono': "../../static/img/pizza.png",
-                     'imagen': "#modal1"}
+                     'icono': "pizza.png",
+                     'imagen': "#modal5"}
 
 pollo = {'nombre': 'Pollo',
          'user': 'Rata Touille',
@@ -136,7 +136,7 @@ pollo = {'nombre': 'Pollo',
          'descripcion': 'Rico pollo hecho con amor',
          'categoria': 'Almuerzos',
          'stock': 30,
-         'icono': "../../static/img/chicken2.png",
+         'icono': "chicken2.png",
          'imagen': "#modal2"}
 
 menu_arroz = {'nombre': 'Menú de arroz',
@@ -145,7 +145,7 @@ menu_arroz = {'nombre': 'Menú de arroz',
               'descripcion': 'Almuerzo de arroz con pollo arvejado.',
               'categoria': 'Almuerzos',
               'stock': 40,
-              'icono': "../../static/img/rice.png",
+              'icono': "rice.png",
               'imagen': "#modal2"}
 
 jugo = {'nombre': 'Jugo',
@@ -154,25 +154,38 @@ jugo = {'nombre': 'Jugo',
         'descripcion': 'Jugo en caja sabor durazno.',
         'categoria': 'Snack',
         'stock': 40,
-        'icono': "../../static/img/juice.png",
+        'icono': "juice.png",
         'imagen': "#modal3"}
 
-menus = [pizza_clasica, pizza_peperoni, pizza_vegetariana, pollo, menu_arroz, jugo]
+def get_info(producto):
+    info = {
+        'nombre' : producto.nombre,
+        'user' : producto.user,
+        'precio' : producto.precio,
+        'decripcion' : producto.descripcion,
+        'categoria' : producto.categoria,
+        'stock' : producto.stock,
+        'icono' : producto.imagen,
+        'imagen' : producto.img_referencia,
+    }
+    return info
 
+def get_menus(user):
+    productos = []
+    for i in Productos.objects.filter(user = user):
+        productos.append(get_info(i))
+    return productos
 
-def get_menus(nombre):
-    menus_usuario = []
-    for comida in menus:
-        if comida['user'] == nombre:
-            menus_usuario.append(comida)
-    return menus_usuario
 
 def vendedor_profile(request):
-    return render(request, 'app/vendedor_profile.html')
+    usuario = "ratatouille"
+    prod = Productos.objects.filter(user=usuario)
+    info_producto = {'menus' : prod}
+    return render(request, 'app/vendedor_profile.html', context=info_producto)
 
 
 def vendedor_profileAlumno(request):
-    usuario = 'michaeljackson'
+    usuario = 'ratatouille'
     clase_user = User.objects.get(username=usuario)
     clase_info = UserInfo.objects.get(user_id=clase_user.id)
     clase_vendedor = Vendedor.objects.get(userinfo_ptr_id=clase_user.id)
@@ -188,16 +201,18 @@ def vendedor_profileAlumno(request):
         formas_de_pago.append('Tarjeta de Debito')
     if clase_vendedor.tarj_junaeb == 1:
         formas_de_pago.append('Tarjeta Junaeb')
+    estado = 'Inactivo'
+    if clase_user.is_active:
+        estado = 'Activo'
     info_vendedor = {
         'nombre' : clase_vendedor.nombre_visible,
         'tipo_vendedor' : tipo,
-        'estado' : clase_user.is_active,
+        'estado' : estado,
         'formas_de_pago' : formas_de_pago,
         'menus' : get_menus(usuario),
         'imagen' : clase_vendedor.archivo_foto_perfil
     }
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
-
 
 def vendedor_edit(request):
 
