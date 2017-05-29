@@ -196,7 +196,7 @@ def vendedor_edit(request):
 
 
 
-def editar_producto(request):
+def editar_producto(request, value=None):
     return render(request, 'app/editar_producto.html')
 
 
