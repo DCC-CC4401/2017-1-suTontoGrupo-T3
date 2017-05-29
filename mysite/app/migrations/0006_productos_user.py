@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='productos',
             name='user',
-            field=models.OneToOneField(default='admin', on_delete=django.db.models.deletion.CASCADE, to='app.Vendedor'),
+            field=models.CharField(max_length=100),
             preserve_default=False,
         ),
     ]
