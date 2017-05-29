@@ -165,19 +165,26 @@ def get_info(producto):
         'categoria' : producto.categoria,
         'stock' : producto.stock,
         'icono' : producto.imagen,
-        'imagen' : producto.img_referencia
+        'imagen' : producto.img_referencia,
     }
     return info
 
 def get_menus(user):
-    productos = Productos.objects.get(user=user)
-    return get_info(productos)
+    productos = []
+    for i in Productos.objects.filter(user = user):
+        productos.append(get_info(i))
+    return productos
+
 
 def vendedor_profile(request):
+<<<<<<< HEAD
     usuario = "ratatouille"
     prod = Productos.objects.filter(user=usuario)
     info_producto = {'menus' : prod}
     return render(request, 'app/vendedor_profile.html', context=info_producto)
+=======
+    return render(request, 'app/vendedor_profile.html')
+>>>>>>> e7ff57623f8ff390e0f28924b320a7e9adb9b83a
 
 
 def vendedor_profileAlumno(request):
@@ -197,16 +204,18 @@ def vendedor_profileAlumno(request):
         formas_de_pago.append('Tarjeta de Debito')
     if clase_vendedor.tarj_junaeb == 1:
         formas_de_pago.append('Tarjeta Junaeb')
+    estado = 'Inactivo'
+    if clase_user.is_active:
+        estado = 'Activo'
     info_vendedor = {
         'nombre' : clase_vendedor.nombre_visible,
         'tipo_vendedor' : tipo,
-        'estado' : clase_user.is_active,
+        'estado' : estado,
         'formas_de_pago' : formas_de_pago,
         'menus' : get_menus(usuario),
         'imagen' : clase_vendedor.archivo_foto_perfil
     }
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
-
 
 def vendedor_edit(request):
     form = EditVForm(request.POST)
