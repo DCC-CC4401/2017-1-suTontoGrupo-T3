@@ -113,7 +113,7 @@ pizza_peperoni = {'nombre': 'Pizza Pepperoni',
                   'categoria': 'Almuerzos',
                   'stock': 20,
                   'icono': "../../static/img/pizza.png",
-                  'imagen': "#modal1"}
+                  'imagen': "#modal4"}
 
 pizza_vegetariana = {'nombre': 'Pizza Vegetariana',
                      'user': 'Michael Jackson',
@@ -122,7 +122,7 @@ pizza_vegetariana = {'nombre': 'Pizza Vegetariana',
                      'categoria': 'Almuerzos',
                      'stock': 20,
                      'icono': "../../static/img/pizza.png",
-                     'imagen': "#modal1"}
+                     'imagen': "#modal5"}
 
 pollo = {'nombre': 'Pollo',
          'user': 'Rata Touille',
