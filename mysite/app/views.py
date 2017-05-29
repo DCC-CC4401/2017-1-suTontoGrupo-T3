@@ -157,16 +157,15 @@ jugo = {'nombre': 'Jugo',
         'imagen': "#modal3"}
 
 def get_info(producto):
-    print (producto)
     info = {
         'nombre' : producto.nombre,
-        'user' : producto["user"],
-        'precio' : producto["precio"],
-        'decripcion' : producto["descripcion"],
-        'categoria' : producto["categoria"],
-        'stock' : producto["stock"],
-        'icono' : producto["imagen"],
-        'imagen' : producto["img_referencia"]
+        'user' : producto.user,
+        'precio' : producto.precio,
+        'decripcion' : producto.descripcion,
+        'categoria' : producto.categoria,
+        'stock' : producto.stock,
+        'icono' : producto.imagen,
+        'imagen' : producto.img_referencia,
     }
     return info
 
@@ -174,7 +173,8 @@ def get_menus(user):
     productos = []
     for i in Productos.objects.filter(user = user):
         productos.append(get_info(i))
-    return get_info(productos)
+    return productos
+
 
 def vendedor_profile(request):
     return render(request, 'app/vendedor_profile.html')
