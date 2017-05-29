@@ -23,6 +23,10 @@ class Alumno(UserInfo):
 class Vendedor(UserInfo):
     nombreFotoPerfil = models.CharField(max_length=50)
     archivoFotoPerfil = models.ImageField(upload_to='app/static/')
+    efectivo = models.BooleanField()
+    tarj_cred = models.BooleanField()
+    tarj_deb = models.BooleanField()
+    tarj_junaeb = models.BooleanField()
 
 
 class VendedorAmbulante(Vendedor):

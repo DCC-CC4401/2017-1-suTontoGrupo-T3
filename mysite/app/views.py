@@ -20,9 +20,12 @@ def login(request):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
         # veo si estan en la bd
-        if UserInfo.objects.get(user=User.objects.get(username=username)) != None:
-            #auth.login(request, username)
-            usuario = UserInfo.objects.get(user=User.objects.get(username=username))
+        user = User.objects.get(username=username)
+        if UserInfo.objects.get(user=user) != None:
+            user.is_active = 1
+            user.save()
+            usuario = UserInfo.objects.get(user=user)
+
             if usuario.tipo == 'fijo' or usuario.tipo == "ambulante":
                 return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
             else: # es alumno
@@ -61,12 +64,15 @@ def signup(request):
         elif (usertype == 1): # es un vendedor fijo
             user = User(username=username, email=email, password=password)
             user.save()
-            cliente_vend_fijo = VendedorFijo(user=User.objects.get(username=username), tipo='fijo')
+            cliente_vend_fijo = VendedorFijo(user=User.objects.get(username=username), tipo='fijo', apertura=hora_inicio, cierre=hora_final,
+                                             tarj_cred=tarjeta_credito, tarj_deb=tarjeta_debito, tarj_junaeb=tarjeta_junaeb)
             cliente_vend_fijo.save()
         elif (usertype == 2): # es un vendedor ambulante
             user = User(username=username, email=email, password=password)
             user.save()
-            cliente_vend_amb = VendedorAmbulante(user=User.objects.get(username=username), tipo='ambulante')
+            cliente_vend_amb = VendedorAmbulante(user=User.objects.get(username=username), tipo='ambulante',
+                                                 tarj_cred=tarjeta_credito, tarj_deb=tarjeta_debito,
+                                                 tarj_junaeb=tarjeta_junaeb)
             cliente_vend_amb.save()
 
     return render(request, 'app/signup.html')
