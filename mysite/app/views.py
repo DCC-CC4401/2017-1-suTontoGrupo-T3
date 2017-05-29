@@ -100,66 +100,7 @@ def signup(request):
     form = SignupForm()
     return render(request,'app/signup.html',{'form':form})
 
-<<<<<<< HEAD
-=======
 
-
-# informacion de test
-pizza_clasica = {'nombre': 'Pizza Clasica',
-                 'user': 'Rata Touille',
-                 'precio': '$1.300',
-                 'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Jamon, Tomate',
-                 'categoria': 'Almuerzos',
-                 'stock': 20,
-                 'icono': "pizza.png",
-                 'imagen': "#modal1"}
-
-pizza_peperoni = {'nombre': 'Pizza Pepperoni',
-                  'user': 'michaeljackson',
-                  'precio': '$1.300',
-                  'descripcion': 'Deliciosa pizza con: Queso mozzarella, Pepperoni',
-                  'categoria': 'Almuerzos',
-                  'stock': 20,
-                  'icono': "pizza.png",
-                  'imagen': "#modal4"}
-
-pizza_vegetariana = {'nombre': 'Pizza Vegetariana',
-                     'user': 'michaeljackson',
-                     'precio': '$1.300',
-                     'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Champiñones, Tomate',
-                     'categoria': 'Almuerzos',
-                     'stock': 20,
-                     'icono': "pizza.png",
-                     'imagen': "#modal5"}
-
-pollo = {'nombre': 'Pollo',
-         'user': 'Rata Touille',
-         'precio': '$1.700',
-         'descripcion': 'Rico pollo hecho con amor',
-         'categoria': 'Almuerzos',
-         'stock': 30,
-         'icono': "chicken2.png",
-         'imagen': "#modal2"}
-
-menu_arroz = {'nombre': 'Menú de arroz',
-              'user': 'Rata Touille',
-              'precio': '$2.500',
-              'descripcion': 'Almuerzo de arroz con pollo arvejado.',
-              'categoria': 'Almuerzos',
-              'stock': 40,
-              'icono': "rice.png",
-              'imagen': "#modal2"}
-
-jugo = {'nombre': 'Jugo',
-        'user': 'Rata Touille',
-        'precio': '$300',
-        'descripcion': 'Jugo en caja sabor durazno.',
-        'categoria': 'Snack',
-        'stock': 40,
-        'icono': "juice.png",
-        'imagen': "#modal3"}
-
->>>>>>> 9b9a866c7750584cee8159dd7817c3e9fd35d6e5
 def get_info(producto):
     info = {
         'nombre' : producto.nombre,
