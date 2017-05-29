@@ -28,8 +28,12 @@ def login(request):
                     user.is_active = 1
                     user.save()
                     usuario = UserInfo.objects.get(user=user)
-                    if usuario.tipo == 'fijo' or usuario.tipo == "ambulante":
+                    if usuario.tipo == 'fijo' :
+                        usuario= VendedorFijo.objects.get(user=user)
                         return render(request, 'app/vendedor_profile.html', {'usuario': usuario,'user':user})
+                    elif usuario.tipo == "ambulante":
+                        usuario=VendedorAmbulante.objects.get(user=user)
+                        return render(request, 'app/vendedor_profile.html', {'usuario': usuario, 'user': user})
                     else:  # es alumno
                         return render(request, 'app/index.html', {'usuario': usuario})
                 else:

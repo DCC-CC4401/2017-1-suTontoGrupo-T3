@@ -45,21 +45,23 @@
                                     &emsp;&emsp;Horario: <a class="light-green-text">12:30-14:15</a>
                                 </p>
 
-
+                            </div>
                             {% else %}
                                 <p class="medium-small flow-text grey-text">&emsp;&emsp;Vendedor Ambulante</p>
-
+                                </div>
                             {% endif %}
 
                             <!--p class="flow-text text-darken-4" style="font-size: 0.88rem;">
                                 &emsp;&emsp;Horario: <a class="light-green-text">12:30-14:15</a>
                             </p--><!--}-->
-                        </div>
+
 
                         <div class="col s3 l2 hide-on-med-and-down center-align">
                             <h4 class="card-title flow-text text-darken-4">Estado</h4>
-                            {% if tipo == "ambulante" and check_in == 1 %}
+                            {% if usuario.tipo == "ambulante" and usuario.check_in == 1%}
                                 <p class="medium-small flow-text light-green-text">Disponible</p>
+                                {% else %}
+                                    <p class="medium-small flow-text light-green-text"> No Disponible</p>
                             {% endif %}
                             <!--else { lo mismo de arriba pero No disponible-->
                         </div>
@@ -69,7 +71,7 @@
                             <h8 class=" grey-text flow-text text-darken-4" style="font-size: 1.3rem;">Formas de pago
                             </h8>
                             <!--Hacer rollbar con las opciones-->
-                            <p class="medium-small flow-text grey-text">Efectivo</p>
+                            <p class="medium-small flow-text grey-text"></p>
                         </div>
                         <div class="col s3 l2 hide-on-med-and-down center-align">
 
@@ -99,7 +101,7 @@
 
                 <div class="row show-on-medium-and-down hide-on-med-and-up">
                     <div class="col s4 offset-s2">
-                        <h4 class="card-title grey-text flow-text text-darken-4">Yolanda Martinez</h4>
+                        <h4 class="card-title grey-text flow-text text-darken-4">{{ user.first_name }}</h4>
                         <!--if(tipo del vendedor == Fijo){
                         <p class="medium-small flow-text grey-text">&ensp;Vendedor Fijo</p>
                         <p class="flow-text text-darken-4" style="font-size: 0.88rem;">
@@ -119,8 +121,12 @@
                         </div>
                     </div>
                     <div class="col s3 m2 l12 offset-s1">
-                        <p class="flow-text text-darken-4">Estado</p>
-                        <p class="medium-small flow-text light-green-text">Disponible</p>
+                         <h4 class="card-title flow-text text-darken-4">Estado</h4>
+                            {% if usuario.tipo == "ambulante" and usuario.check_in == 1%}
+                                <p class="medium-small flow-text light-green-text">Disponible</p>
+                                {% else %}
+                                    <p class="medium-small flow-text light-green-text"> No Disponible</p>
+                            {% endif %}
                     </div>
 
                     <div class="section"></div>
