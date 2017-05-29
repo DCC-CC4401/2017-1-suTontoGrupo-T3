@@ -107,22 +107,22 @@ pizza_clasica = {'nombre': 'Pizza Clasica',
                  'imagen': "#modal1"}
 
 pizza_peperoni = {'nombre': 'Pizza Pepperoni',
-                  'user': 'Michael Jackson',
+                  'user': 'michaeljackson',
                   'precio': '$1.300',
                   'descripcion': 'Deliciosa pizza con: Queso mozzarella, Pepperoni',
                   'categoria': 'Almuerzos',
                   'stock': 20,
                   'icono': "../../static/img/pizza.png",
-                  'imagen': "#modal4"}
+                  'imagen': "#modal1"}
 
 pizza_vegetariana = {'nombre': 'Pizza Vegetariana',
-                     'user': 'Michael Jackson',
+                     'user': 'michaeljackson',
                      'precio': '$1.300',
                      'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Champiñones, Tomate',
                      'categoria': 'Almuerzos',
                      'stock': 20,
                      'icono': "../../static/img/pizza.png",
-                     'imagen': "#modal5"}
+                     'imagen': "#modal1"}
 
 pollo = {'nombre': 'Pollo',
          'user': 'Rata Touille',
@@ -161,28 +161,36 @@ def get_menus(nombre):
             menus_usuario.append(comida)
     return menus_usuario
 
-
-info_vendedor = {'nombre': 'Michael Jackson',
-                 'tipo_vendedor': 'Vendedor Fijo',
-                 'estado': 'Disponible',
-                 'formas_de_pago': 'Efectivo',
-                 'menus': get_menus('Michael Jackson'),
-                 'imagen': "../../static/img/AvatarVendedor6.png"}
-
-info_vendedor2 = {'nombre': 'Rata Touille',
-                  'tipo_vendedor': 'Vendedor Ambulante',
-                  'estado': 'Disponible',
-                  'formas_de_pago': 'Tarjeta de credito',
-                  'menus': get_menus('Rata Touille'),
-                  'imagen': "../../static/img/AvatarVendedor3.png"}
-
-
 def vendedor_profile(request):
     return render(request, 'app/vendedor_profile.html')
 
 
 def vendedor_profileAlumno(request):
-    return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor2)
+    usuario = 'michaeljackson'
+    clase_user = User.objects.get(username=usuario)
+    clase_info = UserInfo.objects.get(user_id=clase_user.id)
+    clase_vendedor = Vendedor.objects.get(userinfo_ptr_id=clase_user.id)
+    tipo = 'Vendedor Ambulante'
+    if 'fijo' in  clase_info.tipo:
+        tipo = 'Vendedor Fijo'
+    formas_de_pago = []
+    if clase_vendedor.efectivo == 1:
+        formas_de_pago.append('Efectivo')
+    if clase_vendedor.tarj_cred == 1:
+        formas_de_pago.append('Tarjeta de Credito')
+    if clase_vendedor.tarj_deb == 1:
+        formas_de_pago.append('Tarjeta de Debito')
+    if clase_vendedor.tarj_junaeb == 1:
+        formas_de_pago.append('Tarjeta Junaeb')
+    info_vendedor = {
+        'nombre' : clase_vendedor.nombre_visible,
+        'tipo_vendedor' : tipo,
+        'estado' : clase_user.is_active,
+        'formas_de_pago' : formas_de_pago,
+        'menus' : get_menus(usuario),
+        'imagen' : clase_vendedor.archivo_foto_perfil
+    }
+    return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
 
 
 def vendedor_edit(request):
