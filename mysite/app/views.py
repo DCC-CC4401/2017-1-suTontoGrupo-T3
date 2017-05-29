@@ -49,113 +49,66 @@ def home(request):
 
 
 def signup(request):
-    form = SignupForm(request.POST)
+
     page = "app/signup.html"
     clienteNul=User(username="nulo")
     cliente = UserInfo(user=clienteNul)
     #recibe el form
-    if (request.method == 'POST' and form.is_valid()):
-        username = form.cleaned_data['nombre']
-        password = form.cleaned_data['password']
-        usertype = form.cleaned_data['usertype']
-        email = form.cleaned_data['email']
-        hora_inicio = form.cleaned_data['hora_inicio']
-        hora_final = form.cleaned_data['hora_final']
-        efectivo = form.cleaned_data['efectivo']
-        tarjeta_credito = form.cleaned_data['tarjeta_credito']
-        tarjeta_debito = form.cleaned_data['tarjeta_debito']
-        tarjeta_junaeb = form.cleaned_data['tarjeta_junaeb']
+    if (request.method == 'POST'):
+        print("1")
+        form = SignupForm(request.POST)
+        print(request.POST)
+        print(form.errors)
+        if(form.is_valid()):
 
-        if (usertype == "3"):  # es un cliente
-            user = User(username=username, email=email, password=password)
-            user.is_active = 1
-            user.save()
-            cliente = Alumno(user=User.objects.get(username=username), tipo='alumno')
-            cliente.save()
-            page = 'app/index.html'
-            return render(request, 'app/index.html')
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            usertype = form.cleaned_data['usertype']
+            email = form.cleaned_data['email']
+            hora_inicial = form.cleaned_data['hora_inicial']
+            hora_final = form.cleaned_data['hora_final']
+            efectivo = form.cleaned_data['efectivo']
+            tarjeta_credito = form.cleaned_data['tarjeta_credito']
+            tarjeta_debito = form.cleaned_data['tarjeta_debito']
+            tarjeta_junaeb = form.cleaned_data['tarjeta_junaeb']
+            if (int(usertype[0]) == 3):  # es un cliente
+                print("entre!!")
+                user = User(username=username, email=email, password=password)
+                user.is_active = 1
+                user.save()
+                cliente = Alumno(user=User.objects.get(username=username), tipo='alumno')
+                cliente.save()
+                page = 'app/index.html'
+                return render(request, 'app/index.html')
 
-        elif (usertype == "1"): # es un vendedor fijo
+            elif (int(usertype[0]) == 1): # es un vendedor fijo
 
-            user = User(username=username, email=email, password=password)
-            user.is_active = 1
-            user.save()
-            cliente = VendedorFijo(user=User.objects.get(username=username), tipo='fijo',
-                                             apertura=hora_inicio, cierre=hora_final,
-                                             tarj_cred=tarjeta_credito, tarj_deb=tarjeta_debito,
-                                             tarj_junaeb=tarjeta_junaeb)
-            cliente.save()
-            return render(request,'app/vendedor_profile.html',{'user':user,'usuario':cliente})
-        elif (usertype == "2"): # es un vendedor ambulante
+                user = User(username=username, email=email, password=password)
+                user.is_active = 1
+                user.save()
+                cliente = VendedorFijo(user=User.objects.get(username=username), tipo='fijo',
+                                                 apertura=hora_inicial, cierre=hora_final,
+                                                 tarj_cred=(True if (tarjeta_credito == 'on') else False),
+                                                 tarj_deb=(True if (tarjeta_debito == 'on') else False),
+                                                 tarj_junaeb=(True if (tarjeta_junaeb == 'on') else False))
+                cliente.save()
+                return render(request,'app/vendedor_profile.html')
+            elif (int(usertype[0]) == 2): # es un vendedor ambulante
 
-            user = User(username=username, email=email, password=password)
-            user.is_active = 1
-            user.save()
-            cliente = VendedorAmbulante(user=User.objects.get(username=username), tipo='ambulante',
-                                                 tarj_cred=tarjeta_credito, tarj_deb=tarjeta_debito,
-                                                 tarj_junaeb=tarjeta_junaeb)
-            cliente.save()
-            page = 'app/vendedor_profile.html'
-            return render(request,'app/vendedor_profile.html',{'user':user,'usuario':cliente})
+                user = User(username=username, email=email, password=password)
+                user.is_active = 1
+                user.save()
+                cliente = VendedorAmbulante(user=User.objects.get(username=username), tipo='ambulante',
+                                            tarj_cred=(True if (tarjeta_credito == 'on') else False),
+                                            tarj_deb=(True if (tarjeta_debito == 'on') else False),
+                                            tarj_junaeb=(True if (tarjeta_junaeb == 'on') else False))
+                cliente.save()
+                page = 'app/vendedor_profile.html'
+                return render(request,'app/vendedor_profile.html')
+
     form = SignupForm()
     return render(request,'app/signup.html',{'form':form})
 
-
-
-# informacion de test
-pizza_clasica = {'nombre': 'Pizza Clasica',
-                 'user': 'Rata Touille',
-                 'precio': '$1.300',
-                 'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Jamon, Tomate',
-                 'categoria': 'Almuerzos',
-                 'stock': 20,
-                 'icono': "pizza.png",
-                 'imagen': "#modal1"}
-
-pizza_peperoni = {'nombre': 'Pizza Pepperoni',
-                  'user': 'michaeljackson',
-                  'precio': '$1.300',
-                  'descripcion': 'Deliciosa pizza con: Queso mozzarella, Pepperoni',
-                  'categoria': 'Almuerzos',
-                  'stock': 20,
-                  'icono': "pizza.png",
-                  'imagen': "#modal4"}
-
-pizza_vegetariana = {'nombre': 'Pizza Vegetariana',
-                     'user': 'michaeljackson',
-                     'precio': '$1.300',
-                     'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Champiñones, Tomate',
-                     'categoria': 'Almuerzos',
-                     'stock': 20,
-                     'icono': "pizza.png",
-                     'imagen': "#modal5"}
-
-pollo = {'nombre': 'Pollo',
-         'user': 'Rata Touille',
-         'precio': '$1.700',
-         'descripcion': 'Rico pollo hecho con amor',
-         'categoria': 'Almuerzos',
-         'stock': 30,
-         'icono': "chicken2.png",
-         'imagen': "#modal2"}
-
-menu_arroz = {'nombre': 'Menú de arroz',
-              'user': 'Rata Touille',
-              'precio': '$2.500',
-              'descripcion': 'Almuerzo de arroz con pollo arvejado.',
-              'categoria': 'Almuerzos',
-              'stock': 40,
-              'icono': "rice.png",
-              'imagen': "#modal2"}
-
-jugo = {'nombre': 'Jugo',
-        'user': 'Rata Touille',
-        'precio': '$300',
-        'descripcion': 'Jugo en caja sabor durazno.',
-        'categoria': 'Snack',
-        'stock': 40,
-        'icono': "juice.png",
-        'imagen': "#modal3"}
 
 def get_info(producto):
     info = {
@@ -185,13 +138,17 @@ def vendedor_profile(request):
 
 
 def vendedor_profileAlumno(request):
-    usuario = 'ratatouille'
+    usuario = 'michaeljackson'
     clase_user = User.objects.get(username=usuario)
     clase_info = UserInfo.objects.get(user_id=clase_user.id)
     clase_vendedor = Vendedor.objects.get(userinfo_ptr_id=clase_user.id)
-    tipo = 'Vendedor Ambulante'
     if 'fijo' in  clase_info.tipo:
+        clase_fijo = VendedorFijo.objects.get(vendedor_ptr_id=clase_user.id)
         tipo = 'Vendedor Fijo'
+        horario = str(clase_fijo.apertura) + '-' + str(clase_fijo.cierre)
+    else:
+        clase_ambulante = VendedorAmbulante.objects.get(vendedor_ptr_id=clase_user.id)
+        tipo = 'Vendedor Ambulante'
     formas_de_pago = []
     if clase_vendedor.efectivo == 1:
         formas_de_pago.append('Efectivo')
@@ -210,7 +167,8 @@ def vendedor_profileAlumno(request):
         'estado' : estado,
         'formas_de_pago' : formas_de_pago,
         'menus' : get_menus(usuario),
-        'imagen' : clase_vendedor.archivo_foto_perfil
+        'imagen' : clase_vendedor.archivo_foto_perfil,
+        'horario' : horario
     }
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
 
