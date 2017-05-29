@@ -22,11 +22,11 @@ def login(request):
         # veo si estan en la bd
         if UserInfo.objects.get(user=username) != None:
             auth.login(request, username)
-            usuario = UserInfo.objects.get(user=username)
+            usuario = UserInfo.objects.get(user=User.objects.get(username=username))
             if usuario.tipo == 'vendedor':
                 return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
             else:
-                return render(request, 'app/vendedor_profileAlumno.html', {'usuario': usuario})
+                return render(request, 'app/index.html', {'usuario': usuario})
     else:
         return render(request, 'app/login.html', {'form': form})
 
@@ -164,11 +164,12 @@ def vendedor_edit(request):
             usuario.save()
         if(foto != None):
             usuario=auth.get_user(request)
+        return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
     else:
         form= EditVForm()
         return render(request,'app/vendedor_edit.html',{'form': form})
 
-        return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
+
 
 
 def editar_producto(request):
