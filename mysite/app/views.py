@@ -156,15 +156,22 @@ jugo = {'nombre': 'Jugo',
         'icono': "../../static/img/juice.png",
         'imagen': "#modal3"}
 
-menus = [pizza_clasica, pizza_peperoni, pizza_vegetariana, pollo, menu_arroz, jugo]
+def get_info(producto):
+    info = {
+        'nombre' : producto.nombre,
+        'user' : producto.user_id,
+        'precio' : producto.precio,
+        'decripcion' : producto.descripcion,
+        'categoria' : producto.categoria,
+        'stock' : 40,
+        'icono' : producto.imagen,
+        'imagen' : producto.img_referencia
+    }
+    return info
 
-
-def get_menus(nombre):
-    menus_usuario = []
-    for comida in menus:
-        if comida['user'] == nombre:
-            menus_usuario.append(comida)
-    return menus_usuario
+def get_menus(user_id):
+    productos = Productos.objects.get(user_id = user_id)
+    return get_info(productos)
 
 def vendedor_profile(request):
     return render(request, 'app/vendedor_profile.html')
@@ -192,7 +199,7 @@ def vendedor_profileAlumno(request):
         'tipo_vendedor' : tipo,
         'estado' : clase_user.is_active,
         'formas_de_pago' : formas_de_pago,
-        'menus' : get_menus(usuario),
+        'menus' : get_menus(clase_user.id),
         'imagen' : clase_vendedor.archivo_foto_perfil
     }
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
