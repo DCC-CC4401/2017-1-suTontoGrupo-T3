@@ -80,13 +80,13 @@ $(function() {
                   <div class="row">
                     <div class="input-field col s6">
                       <i class="material-icons prefix">alarm</i>
-                      <input id="hora_inicial" type="time" class="validate">
-                      <label for="icon_prefix">Hora inicial</label>
+                      <input id="hora_inicial" value="00:00" type="time" class="validate">
+                      <label for="hora_inicial" style="text-align: center;">Hora inicial</label>
                     </div>
                     <div class="input-field col s6">
                       <i class="material-icons prefix">alarm</i>
-                      <input id="hora_final" type="time" class="validate">
-                      <label for="icon_telephone">Hora final</label>
+                      <input id="hora_final" value="00:00" type="time" class="validate">
+                      <label for="hora_final" style="text-align: center;">Hora final</label>
                     </div>
                   </div>
               </div>
@@ -114,10 +114,11 @@ $(function() {
               </div>
             </div>
 
+              <!-- Avatares, no se usaran mas..u
               <div>
                   Cambiar avatar:
               </div>
-                <!-- Avatares, no se usaran mas..
+
                 <div class="col s12 l6">
                   <input class="with-gap" name="group1" type="radio" id="avatar1" />
                   <label for="test1"><img style="max-width: 50px;" src="../static/img/AvatarVendedor1.png"></label>

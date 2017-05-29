@@ -20,13 +20,14 @@ def login(request):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
         # veo si estan en la bd
-        if UserInfo.objects.get(user=username) != None:
-            auth.login(request, username)
+
+        if UserInfo.objects.get(user=User.objects.get(username=username)) != None:
+            #auth.login(request, username)
             usuario = UserInfo.objects.get(user=User.objects.get(username=username))
-            if usuario.tipo == 'vendedor':
+            if usuario.tipo == 'fijo' or usuario.tipo == "ambulante":
                 return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
-            else:
-                return render(request, 'app/index.html', {'usuario': usuario})
+            else: # es alumno
+                return render(request, 'app/vendedor_profileAlumno.html', {'usuario': usuario})
     else:
         return render(request, 'app/login.html', {'form': form})
 
@@ -52,14 +53,23 @@ def signup(request):
         tarjeta_credito = form.cleaned_data['tarjeta_credito']
         tarjeta_debito = form.cleaned_data['tarjeta_debito']
         tarjeta_junaeb = form.cleaned_data['tarjeta_junaeb']
-        avatar1 = form.cleaned_data['avatar1']
-        avatar2 = form.cleaned_data['avatar2']
-        avatar3 = form.cleaned_data['avatar3']
-        avatar4 = form.cleaned_data['avatar4']
 
         if (usertype == 3): # es un cliente
+            user = User(username=username, email=email, password=password)
+            user.save()
+            cliente = Alumno(user=User.objects.get(username=username), tipo='alumno')
+            cliente.save()
+        elif (usertype == 1): # es un vendedor fijo
+            user = User(username=username, email=email, password=password)
+            user.save()
+            cliente_vend_fijo = VendedorFijo(user=User.objects.get(username=username), tipo='fijo')
+            cliente_vend_fijo.save()
+        elif (usertype == 2): # es un vendedor ambulante
+            user = User(username=username, email=email, password=password)
+            user.save()
+            cliente_vend_amb = VendedorAmbulante(user=User.objects.get(username=username), tipo='ambulante')
+            cliente_vend_amb.save()
 
-            cliente = UserInfo(user=username, tipo=usertype)
     return render(request, 'app/signup.html')
 
 # informacion de test
