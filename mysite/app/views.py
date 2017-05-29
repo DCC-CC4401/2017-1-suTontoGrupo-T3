@@ -166,6 +166,7 @@ def get_menus(nombre):
             menus_usuario.append(comida)
     return menus_usuario
 
+
 def vendedor_profile(request):
     usuario = "Rata Touille"
     info_productos = {'menus': get_menus(usuario)}
