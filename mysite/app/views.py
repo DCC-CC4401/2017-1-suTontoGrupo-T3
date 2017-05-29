@@ -29,9 +29,9 @@ def login(request):
                     user.save()
                     usuario = UserInfo.objects.get(user=user)
                     if usuario.tipo == 'fijo' or usuario.tipo == "ambulante":
-                        return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
+                        return render(request, 'app/vendedor_profile.html', {'usuario': usuario,'user':user})
                     else:  # es alumno
-                        return render(request, 'app/vendedor_profileAlumno.html', {'usuario': usuario})
+                        return render(request, 'app/index.html', {'usuario': usuario})
                 else:
                     return render(request, 'app/login2.html', {'form': form})
         except Exception:
@@ -105,8 +105,10 @@ def signup(request):
                 cliente.save()
                 page = 'app/vendedor_profile.html'
                 return render(request,'app/vendedor_profile.html')
+
     form = SignupForm()
     return render(request,'app/signup.html',{'form':form})
+
 
 def get_info(producto):
     info = {
@@ -130,7 +132,9 @@ def get_menus(user):
 
 def vendedor_profile(request):
     usuario = UserInfo.objects.get(is_active=1)
-    info_producto = {'menus' : get_menus(usuario.username),'usuario':usuario}
+    user = User.objects.get(username=usuario.user)
+    name = user.username
+    info_producto = {'menus' : get_menus('ratatouille'),'usuario':usuario,'user':user}
     return render(request, 'app/vendedor_profile.html', context=info_producto)
 
 
@@ -176,7 +180,7 @@ def vendedor_profileAlumno(request):
 def vendedor_edit(request):
 
     # formulario lleno, edicion de datos
-    usuario = UserInfo.objects.get(is_active=1)
+    user = User.objects.get(is_active=1)
 
     if request.method == 'POST':
         form = EditVForm(request.POST)
@@ -186,16 +190,18 @@ def vendedor_edit(request):
             nombre = form.cleaned_data['name']
 
             if nombre != None:
-                usuario.first_name = nombre
-                usuario.save()
-
-            return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
+                user.first_name = nombre
+                user.save()
+            usuario=UserInfo.objects.get(user=user)
+            return render(request, 'app/vendedor_profile.html', {'user': user,'usuario':usuario})
         else :
             form = EditVForm()
-            return render(request, 'app/vendedor_edit.html', {'form': form, 'usuario': usuario})
+            usuario = UserInfo.objects.get(user=user)
+            return render(request, 'app/vendedor_edit.html', {'form': form,'user': user ,'usuario': usuario})
     else:
         form = EditVForm()
-        return render(request, 'app/vendedor_edit.html', {'form': form, 'usuario': usuario})
+        usuario = UserInfo.objects.get(user=user)
+        return render(request, 'app/vendedor_edit.html', {'form': form, 'user':user, 'usuario': usuario})
 
 
 
