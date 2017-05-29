@@ -177,14 +177,9 @@ def get_menus(user):
 
 
 def vendedor_profile(request):
-<<<<<<< HEAD
     usuario = "ratatouille"
-    prod = Productos.objects.filter(user=usuario)
-    info_producto = {'menus' : prod}
+    info_producto = {'menus' : get_menus(usuario)}
     return render(request, 'app/vendedor_profile.html', context=info_producto)
-=======
-    return render(request, 'app/vendedor_profile.html')
->>>>>>> e7ff57623f8ff390e0f28924b320a7e9adb9b83a
 
 
 def vendedor_profileAlumno(request):
