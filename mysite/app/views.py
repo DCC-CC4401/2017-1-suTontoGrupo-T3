@@ -197,10 +197,13 @@ def vendedor_profileAlumno(request):
         formas_de_pago.append('Tarjeta de Debito')
     if clase_vendedor.tarj_junaeb == 1:
         formas_de_pago.append('Tarjeta Junaeb')
+    estado = 'Inactivo'
+    if clase_user.is_active:
+        estado = 'Activo'
     info_vendedor = {
         'nombre' : clase_vendedor.nombre_visible,
         'tipo_vendedor' : tipo,
-        'estado' : clase_user.is_active,
+        'estado' : estado,
         'formas_de_pago' : formas_de_pago,
         'menus' : get_menus(usuario),
         'imagen' : clase_vendedor.archivo_foto_perfil
