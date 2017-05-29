@@ -51,6 +51,9 @@ def home(request):
 def signup(request):
     form = SignupForm(request.POST)
     page = "app/signup.html"
+    clienteNul=User(username="nulo")
+    cliente = UserInfo(user=clienteNul)
+    #recibe el form
     if (request.method == 'POST' and form.is_valid()):
         username = form.cleaned_data['nombre']
         password = form.cleaned_data['password']
@@ -70,30 +73,32 @@ def signup(request):
             cliente = Alumno(user=User.objects.get(username=username), tipo='alumno')
             cliente.save()
             page = 'app/index.html'
+            return render(request, 'app/index.html')
 
         elif (usertype == "1"): # es un vendedor fijo
 
             user = User(username=username, email=email, password=password)
             user.is_active = 1
             user.save()
-            cliente_vend_fijo = VendedorFijo(user=User.objects.get(username=username), tipo='fijo',
+            cliente = VendedorFijo(user=User.objects.get(username=username), tipo='fijo',
                                              apertura=hora_inicio, cierre=hora_final,
                                              tarj_cred=tarjeta_credito, tarj_deb=tarjeta_debito,
                                              tarj_junaeb=tarjeta_junaeb)
-            cliente_vend_fijo.save()
-            page = 'app/vendedor_profile.html'
-
+            cliente.save()
+            return render(request,'app/vendedor_profile.html')
         elif (usertype == "2"): # es un vendedor ambulante
 
             user = User(username=username, email=email, password=password)
             user.is_active = 1
             user.save()
-            cliente_vend_amb = VendedorAmbulante(user=User.objects.get(username=username), tipo='ambulante',
+            cliente = VendedorAmbulante(user=User.objects.get(username=username), tipo='ambulante',
                                                  tarj_cred=tarjeta_credito, tarj_deb=tarjeta_debito,
                                                  tarj_junaeb=tarjeta_junaeb)
-            cliente_vend_amb.save()
+            cliente.save()
             page = 'app/vendedor_profile.html'
-    return render(request, page)
+            return render(request,'app/vendedor_profile.html')
+    return render(request,'app/signup.html',{'form':form})
+
 
 
 # informacion de test
