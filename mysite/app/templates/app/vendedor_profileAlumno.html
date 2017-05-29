@@ -57,7 +57,7 @@
                             {% if tipo_vendedor == 'Vendedor Fijo'%}
                             <p class="flow-text text-darken-4" style="font-size: 0.88rem;">
                                     &emsp;&emsp;Horario: <a class="light-green-text">{{horario}}</a>
-                                </p>
+                            </p>
                             {% endif %}
                             <!--if(tipo==fijo){-->
                             <!--p class="flow-text text-darken-4" style="font-size: 0.88rem;">
@@ -99,21 +99,21 @@
                 <div class="row show-on-medium-and-down hide-on-med-and-up">
                     <div class="col s4 offset-s2">
                         <h4 class="card-title grey-text flow-text text-darken-4">{{nombre}}</h4>
-                        <!--if(tipo del vendedor == Fijo){
-                        <p class="medium-small flow-text grey-text">&ensp;{{tipo_vendedor}}</p>
-                        <p class="flow-text text-darken-4" style="font-size: 0.88rem;">
-                            &ensp;Horario: <a class="light-green-text">12:30-14:15</a>
-                        </p>
-                        }-->
+                        <p class="medium-small flow-text grey-text">&emsp;&emsp;&ensp;{{tipo_vendedor}}</p>
+                            {% if tipo_vendedor == 'Vendedor Fijo'%}
+                            <p class="flow-text text-darken-4" style="font-size: 0.88rem;">
+                                    &emsp;&emsp;Horario: <a class="light-green-text">{{horario}}</a>
+                            </p>
+                            {% endif %}
                         <div class="switch" style="margin-left: 10px;">
                             <label>
                                 <p class="card-title grey-text flow-text text-darken-4" style="font-size: 1.3rem;">
                                     Favorito</p>
                                 <!--<input type="checkbox"><span class="lever"></span>-->
-                                <h6><i class="material-icons amber-text">grade</i>
-                                    <span class=" grey-text flow-text text-darken-4"
-                                          style="font-size:22px; line-height:25px;">42</span>
-                                </h6>
+                                <label>
+                                    No<input type="checkbox"><span class="lever"></span>Si
+                                    <!-- Activo o no-->
+                                </label>
                             </label>
                         </div>
                     </div>

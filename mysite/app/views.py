@@ -105,7 +105,7 @@ def signup(request):
                                        tarj_deb=(True if (tarjeta_debito == 'on') else False),
                                        tarj_junaeb=(True if (tarjeta_junaeb == 'on') else False))
                 cliente.save()
-                return vendedor_profile()
+                return vendedor_profile(request)
             elif (int(usertype[0]) == 2):  # es un vendedor ambulante
 
                 user = User(username=username, email=email, password=password)
@@ -117,7 +117,7 @@ def signup(request):
                                             tarj_junaeb=(True if (tarjeta_junaeb == 'on') else False))
                 cliente.save()
                 page = 'app/vendedor_profile.html'
-                return vendedor_profile()
+                return vendedor_profile(request)
 
     form = SignupForm()
     return render(request, 'app/signup.html', {'form': form})
@@ -146,7 +146,7 @@ def get_menus(user):
 
 def vendedor_profile(request):
     usuario = User.objects.get(is_active=1)
-    user = User.objects.filter(username=usuario.username)
+    user = User.objects.get(username=usuario.username)
     info_producto = {'menus': get_menus(user.username), 'usuario': usuario, 'user': user, }
     return render(request, 'app/vendedor_profile.html', context=info_producto)
 
@@ -159,6 +159,13 @@ def vendedor_profileAlumno2(request):
     return vendedor_profileAlumno(request, 'ratatouille')
 
 
+def vendedor_profileAlumno3(request):
+    return vendedor_profileAlumno(request, 'pedropiedra')
+
+
+def vendedor_profileAlumno4(request):
+    return vendedor_profileAlumno(request, 'jorgegonzalez')
+
 def vendedor_profileAlumno(request, usuario):
     clase_user = User.objects.get(username=usuario)
     clase_info = UserInfo.objects.get(user_id=clase_user.id)
@@ -168,8 +175,6 @@ def vendedor_profileAlumno(request, usuario):
         clase_fijo = VendedorFijo.objects.get(vendedor_ptr_id=clase_user.id)
         tipo = 'Vendedor Fijo'
         horario = str(clase_fijo.apertura) + '-' + str(clase_fijo.cierre)
-        hora_inicio = clase_fijo.apertura
-        hora_fin = clase_fijo.cierre
     else:
         clase_ambulante = VendedorAmbulante.objects.get(vendedor_ptr_id=clase_user.id)
         tipo = 'Vendedor Ambulante'
@@ -194,7 +199,7 @@ def vendedor_profileAlumno(request, usuario):
         'menus': get_menus(usuario),
         'imagen': clase_vendedor.archivo_foto_perfil,
         'horario': horario,
-        'user': user,
+        'user': usuario,
     }
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
 
