@@ -19,3 +19,13 @@ class SignupForm(forms.Form):
     tarjeta_credito = forms.Field(label="tarjeta_credito")
     tarjeta_debito = forms.Field(label="tarjeta_debito")
     tarjeta_junaeb = forms.Field(label="tarjeta_junaeb")
+
+
+class ProductForm(forms.Form):
+    nombre = forms.CharField(label='item', max_length=50)
+    precio = forms.CharField(label='precio', max_length=50)
+    stock = forms.IntegerField(label='stock')
+    descripcion = forms.CharField(label='descripcion', max_length=100)
+    categoria = forms.CharField(label='categoria', max_length=50)
+    imagen = forms.ImageField(label='imagen')
+    img_ref = forms.ImageField(label='img_ref')
