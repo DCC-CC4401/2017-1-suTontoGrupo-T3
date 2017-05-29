@@ -51,6 +51,9 @@ def home(request):
 def signup(request):
     form = SignupForm(request.POST)
     page = "app/signup.html"
+    clienteNul=User(username="nulo")
+    cliente = UserInfo(user=clienteNul)
+    #recibe el form
     if (request.method == 'POST' and form.is_valid()):
         username = form.cleaned_data['nombre']
         password = form.cleaned_data['password']
@@ -70,26 +73,31 @@ def signup(request):
             cliente = Alumno(user=User.objects.get(username=username), tipo='alumno')
             cliente.save()
             page = 'app/index.html'
+            return render(request, 'app/index.html')
+
         elif (usertype == "1"): # es un vendedor fijo
+
             user = User(username=username, email=email, password=password)
             user.is_active = 1
             user.save()
-            cliente_vend_fijo = VendedorFijo(user=User.objects.get(username=username), tipo='fijo',
+            cliente = VendedorFijo(user=User.objects.get(username=username), tipo='fijo',
                                              apertura=hora_inicio, cierre=hora_final,
                                              tarj_cred=tarjeta_credito, tarj_deb=tarjeta_debito,
                                              tarj_junaeb=tarjeta_junaeb)
-            cliente_vend_fijo.save()
-            page = 'app/vendedor_profile.html'
+            cliente.save()
+            return render(request,'app/vendedor_profile.html')
         elif (usertype == "2"): # es un vendedor ambulante
+
             user = User(username=username, email=email, password=password)
             user.is_active = 1
             user.save()
-            cliente_vend_amb = VendedorAmbulante(user=User.objects.get(username=username), tipo='ambulante',
+            cliente = VendedorAmbulante(user=User.objects.get(username=username), tipo='ambulante',
                                                  tarj_cred=tarjeta_credito, tarj_deb=tarjeta_debito,
                                                  tarj_junaeb=tarjeta_junaeb)
-            cliente_vend_amb.save()
+            cliente.save()
             page = 'app/vendedor_profile.html'
-    return render(request, page)
+            return render(request,'app/vendedor_profile.html')
+    return render(request,'app/signup.html',{'form':form})
 
 
 
@@ -104,7 +112,7 @@ pizza_clasica = {'nombre': 'Pizza Clasica',
                  'imagen': "#modal1"}
 
 pizza_peperoni = {'nombre': 'Pizza Pepperoni',
-                  'user': 'Michael Jackson',
+                  'user': 'michaeljackson',
                   'precio': '$1.300',
                   'descripcion': 'Deliciosa pizza con: Queso mozzarella, Pepperoni',
                   'categoria': 'Almuerzos',
@@ -113,7 +121,7 @@ pizza_peperoni = {'nombre': 'Pizza Pepperoni',
                   'imagen': "#modal1"}
 
 pizza_vegetariana = {'nombre': 'Pizza Vegetariana',
-                     'user': 'Michael Jackson',
+                     'user': 'michaeljackson',
                      'precio': '$1.300',
                      'descripcion': 'Deliciosa pizza con: Queso mozzarella, Aceitunas, Champiñones, Tomate',
                      'categoria': 'Almuerzos',
@@ -158,28 +166,36 @@ def get_menus(nombre):
             menus_usuario.append(comida)
     return menus_usuario
 
-
-info_vendedor = {'nombre': 'Michael Jackson',
-                 'tipo_vendedor': 'Vendedor Fijo',
-                 'estado': 'Disponible',
-                 'formas_de_pago': 'Efectivo',
-                 'menus': get_menus('Michael Jackson'),
-                 'imagen': "../../static/img/AvatarVendedor6.png"}
-
-info_vendedor2 = {'nombre': 'Rata Touille',
-                  'tipo_vendedor': 'Vendedor Ambulante',
-                  'estado': 'Disponible',
-                  'formas_de_pago': 'Tarjeta de credito',
-                  'menus': get_menus('Rata Touille'),
-                  'imagen': "../../static/img/AvatarVendedor3.png"}
-
-
 def vendedor_profile(request):
     return render(request, 'app/vendedor_profile.html')
 
 
 def vendedor_profileAlumno(request):
-    return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor2)
+    usuario = 'michaeljackson'
+    clase_user = User.objects.get(username=usuario)
+    clase_info = UserInfo.objects.get(user_id=clase_user.id)
+    clase_vendedor = Vendedor.objects.get(userinfo_ptr_id=clase_user.id)
+    tipo = 'Vendedor Ambulante'
+    if 'fijo' in  clase_info.tipo:
+        tipo = 'Vendedor Fijo'
+    formas_de_pago = []
+    if clase_vendedor.efectivo == 1:
+        formas_de_pago.append('Efectivo')
+    if clase_vendedor.tarj_cred == 1:
+        formas_de_pago.append('Tarjeta de Credito')
+    if clase_vendedor.tarj_deb == 1:
+        formas_de_pago.append('Tarjeta de Debito')
+    if clase_vendedor.tarj_junaeb == 1:
+        formas_de_pago.append('Tarjeta Junaeb')
+    info_vendedor = {
+        'nombre' : clase_vendedor.nombre_visible,
+        'tipo_vendedor' : tipo,
+        'estado' : clase_user.is_active,
+        'formas_de_pago' : formas_de_pago,
+        'menus' : get_menus(usuario),
+        'imagen' : clase_vendedor.archivo_foto_perfil
+    }
+    return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
 
 
 def vendedor_edit(request):
@@ -191,21 +207,21 @@ def vendedor_edit(request):
         nombre = form.cleaned_data['your_name']
         foto = form.cleaned_data['file']
         # si alguno es != de None lo actualizo
-        if (nombre != None):
+        if nombre != None:
             usuario.first_name = nombre
             usuario.save()
-        if (foto != None):
-            usuario = Vendedor.objects.get(user=usuario.username)
+        if foto != None:
+            usuario = Vendedor.objects.get(user=usuario)
             usuario.archivo_foto_perfil = foto
             usuario.save()
         return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
     else:
         form = EditVForm()
-        return render(request, 'app/vendedor_edit.html', {'form': form,'usuario':usuario})
-    return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
+        return render(request, 'app/vendedor_edit.html', {'form': form, 'usuario': usuario})
 
 
-def editar_producto(request):
+
+def editar_producto(request, value=None):
     return render(request, 'app/editar_producto.html')
 
 
