@@ -170,12 +170,14 @@ def get_info(producto):
     return info
 
 def get_menus(user):
-    productos = Productos.objects.get(user = user)
+    productos = Productos.objects.get(user=user)
     return get_info(productos)
 
-
 def vendedor_profile(request):
-    return render(request, 'app/vendedor_profile.html')
+    usuario = "ratatouille"
+    prod = Productos.objects.get(user=usuario)
+    info_producto = {'menus' : prod}
+    return render(request, 'app/vendedor_profile.html', context=info_producto)
 
 
 def vendedor_profileAlumno(request):
