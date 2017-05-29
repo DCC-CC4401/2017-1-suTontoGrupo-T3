@@ -141,12 +141,17 @@ def vendedor_profile(request):
     info_producto = {'menus' : get_menus(user.username),'usuario':usuario,'user':user}
     return render(request, 'app/vendedor_profile.html', context=info_producto)
 
+def vendedor_profileAlumno1(request):
+    return vendedor_profileAlumno(request, 'michaeljackson')
 
-def vendedor_profileAlumno(request):
-    usuario = 'michaeljackson'
+def vendedor_profileAlumno2(request):
+    return vendedor_profileAlumno(request, 'ratatouille')
+
+def vendedor_profileAlumno(request, usuario):
     clase_user = User.objects.get(username=usuario)
     clase_info = UserInfo.objects.get(user_id=clase_user.id)
     clase_vendedor = Vendedor.objects.get(userinfo_ptr_id=clase_user.id)
+    horario = ''
     if 'fijo' in  clase_info.tipo:
         clase_fijo = VendedorFijo.objects.get(vendedor_ptr_id=clase_user.id)
         tipo = 'Vendedor Fijo'
@@ -165,9 +170,9 @@ def vendedor_profileAlumno(request):
         formas_de_pago.append('Tarjeta de Debito')
     if clase_vendedor.tarj_junaeb == 1:
         formas_de_pago.append('Tarjeta Junaeb')
-    estado = 'Inactivo'
+    estado = 'No disponible'
     if clase_user.is_active:
-        estado = 'Activo'
+        estado = 'Disponible'
     info_vendedor = {
         'nombre' : clase_vendedor.nombre_visible,
         'tipo_vendedor' : tipo,
@@ -176,8 +181,6 @@ def vendedor_profileAlumno(request):
         'menus' : get_menus(usuario),
         'imagen' : clase_vendedor.archivo_foto_perfil,
         'horario' : horario,
-        'hora_inicio' : hora_inicio,
-        'hora_fin' : hora_fin
     }
     return render(request, 'app/vendedor_profileAlumno.html', context=info_vendedor)
 
