@@ -55,7 +55,9 @@
                             <!--Debe recibir el tipo de vendedor desde el controlador-->
                             <p class="medium-small flow-text grey-text">&emsp;&emsp;&ensp;{{tipo_vendedor}}</p>
                             {% if tipo_vendedor == 'Vendedor Fijo'%}
-                            <p class="medium-small flow-text grey-text">&emsp;&emsp;&ensp;Horario de Atencion: {{horario}}</p>
+                            <p class="flow-text text-darken-4" style="font-size: 0.88rem;">
+                                    &emsp;&emsp;Horario: <a class="light-green-text">{{horario}}</a>
+                                </p>
                             {% endif %}
                             <!--if(tipo==fijo){-->
                             <!--p class="flow-text text-darken-4" style="font-size: 0.88rem;">
@@ -66,7 +68,7 @@
                         <div class="col s3 l2 hide-on-med-and-down center-align">
                             <h4 class="card-title flow-text text-darken-4">Estado</h4>
                             <!--if(tipo==fijo && horario entre sus horarios || tipo==ambulante && estado==activo)-->
-                            <p class="medium-small flow-text light-green-text" id="estado"></p>
+                            <p class="medium-small flow-text light-green-text">{{estado}}</p>
                             <!--else { lo mismo de arriba pero No disponible-->
                         </div>
 
