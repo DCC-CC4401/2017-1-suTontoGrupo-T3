@@ -23,14 +23,14 @@ class Alumno(UserInfo):
 class Vendedor(UserInfo):
     nombre_visible = models.CharField(max_length=50)
     archivo_foto_perfil = models.ImageField(upload_to='app/static/')
-    efectivo = models.BooleanField()
-    tarj_cred = models.BooleanField()
-    tarj_deb = models.BooleanField()
-    tarj_junaeb = models.BooleanField()
+    efectivo = models.BooleanField(default=False)
+    tarj_cred = models.BooleanField(default=False)
+    tarj_deb = models.BooleanField(default=False)
+    tarj_junaeb = models.BooleanField(default=False)
 
 
 class VendedorAmbulante(Vendedor):
-    check_in = models.BooleanField
+    check_in = models.BooleanField(default=False)
 
 
 
