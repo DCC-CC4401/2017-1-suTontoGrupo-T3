@@ -6,6 +6,16 @@
             $('.modal').modal();
         });
 
+        $(document).ready(function (tipo, estado, hora_i, hora_f) {
+            <!--if(tipo==fijo && horario entre sus horarios || tipo==ambulante && estado==activo)-->
+            var hourMin = new Date().getHourMinute();
+            if((tipo=="fijo" && hora_i <= hourMin && hora_f >= hourMin) || (tipo="ambulante" && estado==true)) {
+                $('#estado').value = "Disponible"
+            } else {
+                $('#estado').value = "No Disponible"
+            }
+        })
+
     </script>
     <main>
 
@@ -50,7 +60,7 @@
                         <div class="col s3 l2 hide-on-med-and-down center-align">
                             <h4 class="card-title flow-text text-darken-4">Estado</h4>
                             <!--if(tipo==fijo && horario entre sus horarios || tipo==ambulante && estado==activo)-->
-                            <p class="medium-small flow-text light-green-text">{{estado}}</p>
+                            <p class="medium-small flow-text light-green-text" id="estado"></p>
                             <!--else { lo mismo de arriba pero No disponible-->
                         </div>
 
@@ -156,7 +166,7 @@
                                                             <li>Stock: {{food.stock}}</li>
                                                             <li>Descripción: {{food.decripcion}}
                                                                 <p class="right-align"><a class="waves-effect waves-light"
-                                                                                          href={{food.imagen}}>Ver imagen</a></p>
+                                                                                          href={{food.img_referencia}}>Ver imagen</a></p>
                                                             </li>
                                                         </ul>
                                                     </div>
