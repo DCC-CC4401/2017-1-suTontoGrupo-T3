@@ -25,7 +25,6 @@ def login(request):
             user.is_active = 1
             user.save()
             usuario = UserInfo.objects.get(user=user)
-
             if usuario.tipo == 'fijo' or usuario.tipo == "ambulante":
                 return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
             else: # es alumno
@@ -179,11 +178,12 @@ def vendedor_edit(request):
             usuario.save()
         if(foto != None):
             usuario=auth.get_user(request)
+        return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
     else:
         form= EditVForm()
         return render(request,'app/vendedor_edit.html',{'form': form})
 
-        return render(request, 'app/vendedor_profile.html', {'usuario': usuario})
+
 
 
 def editar_producto(request):

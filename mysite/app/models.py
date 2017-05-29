@@ -21,8 +21,8 @@ class Alumno(UserInfo):
     pass
 
 class Vendedor(UserInfo):
-    nombreFotoPerfil = models.CharField(max_length=50)
-    archivoFotoPerfil = models.ImageField(upload_to='app/static/')
+    nombre_visible = models.CharField(max_length=50)
+    archivo_foto_perfil = models.ImageField(upload_to='app/static/')
     efectivo = models.BooleanField()
     tarj_cred = models.BooleanField()
     tarj_deb = models.BooleanField()
@@ -61,4 +61,4 @@ class Productos(models.Model):
     categoria = models.CharField(max_length=50)
     stock = models.IntegerField
     imagen = models.ImageField(upload_to='app/static/')
-    imgReferencia = models.ImageField(upload_to='app/static/')
+    img_referencia = models.ImageField(upload_to='app/static/')
