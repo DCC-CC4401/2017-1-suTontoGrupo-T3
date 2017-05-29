@@ -156,25 +156,30 @@ jugo = {'nombre': 'Jugo',
         'icono': "../../static/img/juice.png",
         'imagen': "#modal3"}
 
-menus = [pizza_clasica, pizza_peperoni, pizza_vegetariana, pollo, menu_arroz, jugo]
+def get_info(producto):
+    info = {
+        'nombre' : producto.nombre,
+        'user' : producto.user,
+        'precio' : producto.precio,
+        'decripcion' : producto.descripcion,
+        'categoria' : producto.categoria,
+        'stock' : producto.stock,
+        'icono' : producto.imagen,
+        'imagen' : producto.img_referencia
+    }
+    return info
 
-
-def get_menus(nombre):
-    menus_usuario = []
-    for comida in menus:
-        if comida['user'] == nombre:
-            menus_usuario.append(comida)
-    return menus_usuario
+def get_menus(user):
+    productos = Productos.objects.get(user = user)
+    return get_info(productos)
 
 
 def vendedor_profile(request):
-    usuario = "Rata Touille"
-    info_productos = {'menus': get_menus(usuario)}
-    return render(request, 'app/vendedor_profile.html', context=info_productos)
+    return render(request, 'app/vendedor_profile.html')
 
 
 def vendedor_profileAlumno(request):
-    usuario = 'michaeljackson'
+    usuario = 'ratatouille'
     clase_user = User.objects.get(username=usuario)
     clase_info = UserInfo.objects.get(user_id=clase_user.id)
     clase_vendedor = Vendedor.objects.get(userinfo_ptr_id=clase_user.id)
