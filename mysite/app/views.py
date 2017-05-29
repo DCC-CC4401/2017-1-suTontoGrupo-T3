@@ -91,6 +91,7 @@ def signup(request):
                 user.is_active = 1
                 user.save()
                 cliente = VendedorFijo(user=User.objects.get(username=username), tipo='fijo',
+                                                nombre_visible=username,
                                                  apertura=hora_inicial, cierre=hora_final,
                                                  tarj_cred=(True if (tarjeta_credito == 'on') else False),
                                                  tarj_deb=(True if (tarjeta_debito == 'on') else False),
@@ -193,17 +194,23 @@ def vendedor_edit(request):
             nombre = form.cleaned_data['name']
 
             if nombre != None:
-                user.first_name = nombre
-                user.save()
-            usuario=UserInfo.objects.get(user=user)
-            return render(request, 'app/vendedor_profile.html', {'user': user,'usuario':usuario})
+                usuario = Vendedor.objects.get(user=user)
+                usuario.nombre_visible = nombre
+                usuario.save()
+                if usuario.tipo == 'fijo':
+                    usuario = VendedorFijo.objects.get(user=user)
+                    return render(request, 'app/vendedor_profile.html', {'usuario': usuario, 'user': user})
+                elif usuario.tipo == "ambulante":
+                    usuario = VendedorAmbulante.objects.get(user=user)
+                    return render(request, 'app/vendedor_profile.html', {'usuario': usuario, 'user': user})
+
         else :
             form = EditVForm()
-            usuario = UserInfo.objects.get(user=user)
+            usuario = Vendedor.objects.get(user=user)
             return render(request, 'app/vendedor_edit.html', {'form': form,'user': user ,'usuario': usuario})
     else:
         form = EditVForm()
-        usuario = UserInfo.objects.get(user=user)
+        usuario = Vendedor.objects.get(user=user)
         return render(request, 'app/vendedor_edit.html', {'form': form, 'user':user, 'usuario': usuario})
 
 
