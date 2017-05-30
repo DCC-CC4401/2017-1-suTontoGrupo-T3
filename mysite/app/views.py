@@ -277,3 +277,24 @@ def add_item(request):
         user = User.objects.get(is_active=1)
         info_producto = {'menus': get_menus(user.username), 'usuario': usuario, 'user': user, 'form': form}
         return render(request, 'app/vendedor_profile.html', context=info_producto)
+
+def edit_prod(request):
+    form = ProductForm(request.POST)
+    print(form.errors)
+    print(request.POST)
+    if request.method == 'POST' and form.is_valid():
+        user = User.objects.get(is_active=1)
+        productos = Productos.objects.filter(user=user.username)
+        prod = productos[0]
+        prod.nombre = form.cleaned_data['nombre']
+        prod.precio = form.cleaned_data['precio']
+        prod.stock = form.cleaned_data['stock']
+        prod.descripcion = form.cleaned_data['descripcion']
+        prod.categoria = form.cleaned_data['categoria']
+        prod.save()
+        return vendedor_profile(request)
+    else:
+        usuario = User.objects.get(is_active=1)
+        user = User.objects.get(is_active=1)
+        info_producto = {'menus': get_menus(user.username), 'usuario': usuario, 'user': user, 'form': form}
+        return render(request, 'app/vendedor_profile.html', context=info_producto)

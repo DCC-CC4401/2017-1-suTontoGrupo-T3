@@ -21,9 +21,9 @@
                         <div class='input-field col s12 m12'>
                             &ensp;Nombre del producto:
                             <div class="input-field inline ">
-                                <input class='validate' type='text' name='item'
-                                       id='item' value="{{ item.nombre }}"/>
-                                <label style="text-align: center" for='item'></label>
+                                <input class='validate' type='text' name='nombre'
+                                       id='nombre' value="{{ item.nombre }}"/>
+                                <label style="text-align: center" for='nombre'></label>
                             </div>
                         </div>
                     </div>
@@ -43,6 +43,15 @@
                             <div class="input-field inline">
                                 <input placeholder="42" class='validate' type='text' name='stock' id='stock' value="{{ item.stock }}"/>
                                 <label style="text-align: center" for='stock'></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='input-field col s12 m12'>
+                            &ensp;Categoria:
+                            <div class="input-field inline">
+                                <input placeholder="Almuerzo" class='validate' type='text' name='categoria' id='categoria' value="{{ item.categoria }}"/>
+                                <label style="text-align: center" for='categoria'></label>
                             </div>
                         </div>
                     </div>
@@ -151,7 +160,7 @@
                     </div>
                     <div class='row'>
                         <a class='col l5 offset-l4 btn btn-large waves-effect button teal'
-                           href="{% url 'vendedor_profile' %}">&emsp; &emsp;Guardar cambios<i
+                           href="{% url 'edit_prod' %}">&emsp; &emsp;Guardar cambios<i
                                 class="material-icons right">send</i></a>
                     </div>
                 </div>
