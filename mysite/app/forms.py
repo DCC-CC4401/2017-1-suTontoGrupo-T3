@@ -22,10 +22,8 @@ class SignupForm(forms.Form):
 
 
 class ProductForm(forms.Form):
-    nombre = forms.CharField(label='item', max_length=50)
+    nombre = forms.CharField(label='nombre', max_length=50)
     precio = forms.CharField(label='precio', max_length=50)
     stock = forms.IntegerField(label='stock')
     descripcion = forms.CharField(label='descripcion', max_length=100)
     categoria = forms.CharField(label='categoria', max_length=50)
-    imagen = forms.ImageField(label='imagen')
-    img_ref = forms.ImageField(label='img_ref')
