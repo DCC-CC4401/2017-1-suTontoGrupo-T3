@@ -14,11 +14,13 @@ def index(request):
     user = User.objects.filter(is_active=1)
     return render(request, 'app/index.html', {'user': user})
 
+
 def logout(request):
     user = User.objects.get(is_active=1)
     user.is_active = 0
     user.save()
     return index(request)
+
 
 def login(request):
     form = LoginForm(request.POST)
@@ -37,10 +39,12 @@ def login(request):
                     usuario = UserInfo.objects.get(user=user)
                     if usuario.tipo == 'fijo':
                         usuario = VendedorFijo.objects.get(user=user)
-                        return render(request, 'app/vendedor_profile.html', {'menus': get_menus(user.username), 'usuario': usuario, 'user': user})
+                        return render(request, 'app/vendedor_profile.html',
+                                      {'menus': get_menus(user.username), 'usuario': usuario, 'user': user})
                     elif usuario.tipo == "ambulante":
                         usuario = VendedorAmbulante.objects.get(user=user)
-                        return render(request, 'app/vendedor_profile.html', {'menus': get_menus(user.username), 'usuario': usuario, 'user': user})
+                        return render(request, 'app/vendedor_profile.html',
+                                      {'menus': get_menus(user.username), 'usuario': usuario, 'user': user})
                     else:  # es alumno
                         return render(request, 'app/index.html', {'usuario': usuario, 'user': user})
                 else:
@@ -166,6 +170,7 @@ def vendedor_profileAlumno3(request):
 def vendedor_profileAlumno4(request):
     return vendedor_profileAlumno(request, 'jorgegonzalez')
 
+
 def vendedor_profileAlumno(request, usuario):
     clase_user = User.objects.get(username=usuario)
     clase_info = UserInfo.objects.get(user_id=clase_user.id)
@@ -221,10 +226,12 @@ def vendedor_edit(request):
                 usuario.save()
                 if usuario.tipo == 'fijo':
                     usuario = VendedorFijo.objects.get(user=user)
-                    return render(request, 'app/vendedor_profile.html', {'menus': get_menus(user.username), 'usuario': usuario, 'user': user})
+                    return render(request, 'app/vendedor_profile.html',
+                                  {'menus': get_menus(user.username), 'usuario': usuario, 'user': user})
                 elif usuario.tipo == "ambulante":
                     usuario = VendedorAmbulante.objects.get(user=user)
-                    return render(request, 'app/vendedor_profile.html', {'menus': get_menus(user.username), 'usuario': usuario, 'user': user})
+                    return render(request, 'app/vendedor_profile.html',
+                                  {'menus': get_menus(user.username), 'usuario': usuario, 'user': user})
 
         else:
             form = EditVForm()
@@ -244,24 +251,29 @@ def editar_producto(request):
         prod.append(i)
     return render(request, 'app/editar_producto.html', {'item': prod[0], 'user': user})
 
+
 def iniciar():
     vendedor_profile()
 
 
 def add_item(request):
     form = ProductForm(request.POST)
-    if  request.method == 'POST' and form.is_valid():
-        print(1)
+    print(form.errors)
+    print(request.POST)
+    if request.method == 'POST' and form.is_valid():
         username = User.objects.get(is_active=1)
         user = username.username
-        nombre = form.cleaned_data['item']
+        nombre = form.cleaned_data['nombre']
         precio = form.cleaned_data['precio']
         stock = form.cleaned_data['stock']
         descripcion = form.cleaned_data['descripcion']
         categoria = form.cleaned_data['categoria']
-        imagen = form.cleaned_data['imagen']
-        img_ref = form.cleaned_data['img_ref']
-        prod = Productos(user=user, nombre=nombre, precio=precio, stock=stock, imagen=imagen, descripcion=descripcion,
-                     categoria=categoria, img_referencia=img_ref)
+        prod = Productos(user=user, nombre=nombre, precio=precio, stock=stock, descripcion=descripcion,
+                         categoria=categoria)
         prod.save()
-    return vendedor_profile(request)
+        return vendedor_profile(request)
+    else:
+        usuario = User.objects.get(is_active=1)
+        user = User.objects.get(is_active=1)
+        info_producto = {'menus': get_menus(user.username), 'usuario': usuario, 'user': user, 'form': form}
+        return render(request, 'app/vendedor_profile.html', context=info_producto)
